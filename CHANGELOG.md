@@ -1,5 +1,5 @@
-# Stanford Starter Theme
+# EIRH SubTheme
 
-8.x-X.X
+1.x.x
 --------------------------------------------------------------------------------
 _Release Date: 202X-XX-XX_

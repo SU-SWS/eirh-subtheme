@@ -1,8 +1,8 @@
 {
-  "name": "su-sws/stanford_starter",
-  "description": "Stanford Starter Sub Theme.",
+  "name": "su-sws/eirh_subtheme",
+  "description": "EIRH Subtheme.",
   "type": "drupal-custom-theme",
-  "homepage": "https://github.com/SU-SWS/stanford_starter",
+  "homepage": "https://github.com/SU-SWS/eirh_subtheme",
   "authors": [],
   "license": "GPL-2.0-or-later",
   "minimum-stability": "dev"

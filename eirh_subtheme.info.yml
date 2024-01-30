@@ -1,12 +1,12 @@
-name: Stanford Starter
+name: EIRH Subtheme
 type: theme
-description: 'Stanford Starter Theme.'
+description: 'EIRH Subtheme.'
 package: Stanford
-version: 8.x-1.0-dev
-core_version_requirement: ^9 || ^10
+version: 1.x-dev
+core_version_requirement: ^9 || ^10 || ^11
 base theme: stanford_basic
 libraries:
-  - stanford_starter/allpages
+  - eirh_subtheme/allpages
 
 regions:
   page_top: 'Page top'

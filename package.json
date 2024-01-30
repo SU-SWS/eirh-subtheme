@@ -1,5 +1,5 @@
 {
-  "name": "stanford_starter",
+  "name": "eirh_subtheme",
   "version": "1.0.0",
   "description": "Changelog: [CHANGELOG.md](CHANGELOG.md)",
   "main": "webpack.config.js",
@@ -9,6 +9,7 @@
   },
   "author": "",
   "license": "ISC",
+  "private": true,
   "dependencies": {
     "@babel/core": "^7.22.1",
     "@babel/polyfill": "^7.12.1",
