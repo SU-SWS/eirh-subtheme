@@ -1,26 +1,26 @@
-# [Stanford Starter](https://github.com/SU-SWS/stanford_starter)
-##### Version: 8.x-1.0-dev
+# [EIRH Subtheme - Event Resources Finder](https://github.com/SU-SWS/eirh_subtheme)
 
 Changelog: [Changelog.txt](CHANGELOG.txt)
 
 Description
 ---
 
-Stanford Starter is a Stanford sub-theme that works with the Stanford Basic theme.
+This is a custom subtheme for EIRH - Event Resource Finder
 
 Documentation
 ---
-See subtheming guides and best practices here: 
-https://devguide.sites.stanford.edu/front-end/drupal/sub-themes 
+See subtheming guides and best practices here:
+
+https://devguide.sites.stanford.edu/front-end/drupal/sub-themes
 
 Installation
 ---
 1. Review the documentation link above for best practices, particularly the Do's and Don't's sections.
-2. Fork or download this theme repository. 
+2. Fork or download this theme repository.
 3. Change all theme file names from including "stanford_starter" to including the machine name of your theme.
 4. Run a search and replace throughout the theme files to replace "stanford_starter" with the machine name of your theme.
-5. Add any specific brand colors you need (in addition to the decanter colors that are already available) to src/scss/utilities/variables/_colors.scss. 
-See all the colors already available through decanter: https://decanter.stanford.edu/page/brand-design-elements-color/ 
+5. Add any specific brand colors you need (in addition to the decanter colors that are already available) to src/scss/utilities/variables/_colors.scss.
+See all the colors already available through decanter: https://decanter.stanford.edu/page/brand-design-elements-color/
 6. If desired, add font settings if you need to override and use fonts other than decanter fonts ( https://decanter.stanford.edu/page/brand-design-elements-typography/ ) [link],
 by defining a font library in the themename.libraries.yml file.
 7. If desired, add button mixins in src/scss/utilities/mixins/_buttons.scss with your button styles and then reference them and use them in src/scss/theme/_button.scss.
@@ -38,16 +38,16 @@ Developer
 If you wish to develop on this theme you will most likely need to compile some new css. Please use the sass structure provided and compile with the sass compiler packaged in this theme. To install:
 
 ```
-npm install
+yarn install
 ```
 After you've made a change you want to see processed, you can run:
 ```
-npm run build/yarn build
+yarn build
 ```
 This will process scss, js, and asset files, preparing them from the src directory to the dist directory.
 
 ```
-npm run watch/yarn watch
+yarn watch
 ```
 This will watch the scss files and compile them upon saving.
 
