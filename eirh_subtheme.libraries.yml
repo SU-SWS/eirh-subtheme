@@ -101,3 +101,10 @@ allpages:
 #    state:
 #      dist/css/state.css: {}
 
+eventshub:
+  version: VERSION
+  css:
+    base:
+      src/eventshub/dist/index.css: {}
+  js:
+    src/eventshub/dist/eventshub.js: {}
