@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <h2 className="text-white">Vite + React</h2>
+      <h2 className="text-digital-red">Vite + React</h2>
       <div>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
