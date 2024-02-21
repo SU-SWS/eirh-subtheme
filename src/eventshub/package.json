@@ -10,9 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.17.0",
+    "@algolia/autocomplete-theme-classic": "^1.17.0",
+    "algoliasearch": "^4.22.1",
     "decanter": "^7.2.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-instantsearch": "^7.6.0",
+    "react-instantsearch-core": "^7.6.0",
+    "react-instantsearch-hooks": "^6.47.3"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
