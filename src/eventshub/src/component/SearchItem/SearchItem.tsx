@@ -1,13 +1,12 @@
-import React, { createElement } from 'react';
+import { Hit as AlgoliaHit } from 'instantsearch.js/es/types';
 
-export function SearchItem({ hit, components }) {
+export function SearchItem({ hit }: AlgoliaHit) {
   return (
-    <a href={hit.url} className="aa-ItemLink">
-      <div className="aa-ItemContent">
-        <div className="aa-ItemTitle">
-          <components.Highlight hit={hit} attribute="name" />
-        </div>
-      </div>
-    </a>
+    <article>
+      <h1>{hit.name}</h1>
+      {hit?.descrption && <p>{hit.descrption}</p>}
+      <p>{hit.type}</p>
+      <p>{hit.status}</p>
+    </article>
   );
 }
