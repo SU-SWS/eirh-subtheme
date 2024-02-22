@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react';
 import { createElement, Fragment, useEffect, useRef, useState } from 'react';
 import { render } from 'react-dom';
 
@@ -7,11 +6,11 @@ import {
   autocomplete,
   AutocompleteOptions,
   Render,
+  getAlgoliaResults,
 } from '@algolia/autocomplete-js';
 import { BaseItem } from '@algolia/autocomplete-core';
 import { debounce } from '@algolia/autocomplete-shared';
 import type { SearchClient } from 'algoliasearch/lite';
-import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 
 import '@algolia/autocomplete-theme-classic';
 
@@ -43,51 +42,6 @@ export function Autocomplete({
     500
   );
 
-  const plugins = useMemo(() => {
-    const querySuggestions = createQuerySuggestionsPlugin({
-      searchClient,
-      indexName: searchIndex,
-      transformSource({ source }) {
-        return {
-          ...source,
-          sourceId: 'querySuggestionsPlugin',
-          onSelect({ item }) {
-            setInstantSearchUiState({
-              query: item.query,
-              category: item.__autocomplete_qsCategory || '',
-            });
-          },
-          getItems(params) {
-            if (!params.state.query) {
-              return [];
-            }
-
-            return source.getItems(params);
-          },
-          templates: {
-            ...source.templates,
-            header({ items }) {
-              if (items.length === 0) {
-                return <Fragment />;
-              }
-
-              return (
-                <Fragment>
-                  <span className='aa-SourceHeaderTitle'>
-                    In other categories
-                  </span>
-                  <span className='aa-SourceHeaderLine' />
-                </Fragment>
-              );
-            },
-          },
-        };
-      },
-    });
-
-    return [querySuggestions];
-  }, [searchClient, searchIndex]);
-
   useEffect(() => {
     setQuery(instantSearchUiState.query);
     setPage(0);
@@ -100,21 +54,44 @@ export function Autocomplete({
 
     const autocompleteInstance = autocomplete({
       ...autocompleteProps,
+      debug: true,
       container: autocompleteContainer.current,
       initialState: { query },
-      plugins,
+      getSources() {
+        return [
+          {
+            sourceId: 'querySuggestions',
+            getItemInputValue: ({ item }) => item.query,
+            getItems({ query }) {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: searchIndex,
+                    query,
+                    params: {
+                      hitsPerPage: 5,
+                    },
+                  },
+                ],
+              });
+            },
+            templates: {
+              item({ item, components }) {
+                return components.ReverseHighlight({
+                  hit: item,
+                  attribute: 'query',
+                });
+              },
+            },
+          },
+        ];
+      },
       onReset() {
         setInstantSearchUiState({ query: '' });
       },
       onSubmit({ state }) {
         setInstantSearchUiState({ query: state.query });
-      },
-      onStateChange({ prevState, state }) {
-        if (prevState.query !== state.query) {
-          debouncedSetInstantSearchUiState({
-            query: state.query,
-          });
-        }
       },
       renderer: { createElement, Fragment, render: render as Render },
     });
