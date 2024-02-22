@@ -1,4 +1,4 @@
-# 1. Record architecture decisions
+# 0. Record architecture decisions
 
 Date: 2024-02-22
 
@@ -17,3 +17,5 @@ We will use Architecture Decision Records, as [described by Michael Nygard](http
 ## Consequences
 
 See Michael Nygard's article, linked above. For a lightweight ADR toolset, see Nat Pryce's [adr-tools](https://github.com/npryce/adr-tools).
+
+See [MADR examples](https://adr.github.io/madr/examples.html) to learn more about the formatting of ADRs.
