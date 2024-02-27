@@ -16,6 +16,7 @@
     "@babel/preset-env": "^7.22.4",
     "autoprefixer": "^10.4.16",
     "babel-loader": "^9.1.2",
+    "cnbuilder": "^3.1.0",
     "css-loader": "^6.8.1",
     "decanter": "^6.2.14",
     "drupal-behaviors-loader": "^1.0.1",
