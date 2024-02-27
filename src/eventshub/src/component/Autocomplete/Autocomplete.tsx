@@ -60,9 +60,6 @@ export function Autocomplete({
     const autocompleteInstance = autocomplete({
       debug: true,
       container: autocompleteContainer.current,
-      // initialState: { query },
-      // plugins: [querySuggestionsPlugin],
-      insights: true,
       getSources() {
         return [
           {
@@ -78,9 +75,27 @@ export function Autocomplete({
                 ],
               });
             },
-            // getItemUrl({ item }) {
-            //   return item.url;
-            // },
+            templates: {
+              item({ item, components }) {
+                return (
+                  <div className='aa-ItemWrapper'>
+                    <div className='aa-ItemContent'>
+                      <div className='aa-ItemContentBody'>
+                        <div className='aa-ItemContentTitle'>
+                          <components.Snippet hit={item} attribute='name' />
+                        </div>
+                        <div className='aa-ItemContentDescription'>
+                          <components.Snippet
+                            hit={item}
+                            attribute='description'
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              },
+            },
           },
         ];
       },
@@ -110,7 +125,7 @@ export function Autocomplete({
     });
 
     return () => autocompleteInstance.destroy();
-  }, [autocompleteProps, query, searchClient, searchIndex]);
+  }, [autocompleteProps, searchClient, searchIndex]);
 
   return <div className={className} ref={autocompleteContainer} />;
 }
