@@ -10,8 +10,8 @@ import { BaseItem } from '@algolia/autocomplete-core';
 import type { SearchClient } from 'algoliasearch/lite';
 import { usePagination, useSearchBox } from 'react-instantsearch-core';
 
+// TODO: Determine if we should build upon or remove algolia styles
 import '@algolia/autocomplete-theme-classic';
-import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 
 type AutocompleteProps = Partial<AutocompleteOptions<BaseItem>> & {
   searchClient: SearchClient;
@@ -36,16 +36,6 @@ export function Autocomplete({
 
   const [instantSearchUiState, setInstantSearchUiState] =
     useState<SetInstantSearchUiStateOptions>({ query });
-
-  const querySuggestionsPlugin = createQuerySuggestionsPlugin({
-    searchClient,
-    indexName: searchIndex,
-    getSearchParams() {
-      return {
-        hitsPerPage: 10,
-      };
-    },
-  });
 
   useEffect(() => {
     setQuery(instantSearchUiState.query);

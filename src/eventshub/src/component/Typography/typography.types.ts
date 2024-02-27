@@ -18,6 +18,4 @@ export type TextAlignType = keyof typeof styles.textAligns;
 
 export type TextColorType = keyof typeof styles.textColors;
 
-export type TextBgColorType = keyof typeof styles.textBgColors;
-
 export type TextVariantType = keyof typeof styles.textVariants;
