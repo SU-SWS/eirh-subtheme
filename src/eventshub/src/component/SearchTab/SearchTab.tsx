@@ -6,11 +6,11 @@ import {
 } from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
 import { SearchItem } from '../SearchItem';
-import searchClient from '../../utils/algoliaConfig'
+import searchClient from '../../utils/algoliaConfig';
 
 type SearchTabProps = {
   searchIndex: string;
-}
+};
 
 export const SearchTab = ({ searchIndex }: SearchTabProps) => {
   return (
@@ -22,6 +22,8 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
       >
         <Configure hitsPerPage={40} />
         <Autocomplete
+          searchClient={searchClient}
+          searchIndex={searchIndex}
           placeholder='Search by venues'
           detachedMediaQuery='none'
           openOnFocus
@@ -30,5 +32,5 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
         <Pagination />
       </InstantSearch>
     </div>
-  )
-}
+  );
+};

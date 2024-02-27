@@ -1,7 +1,5 @@
 import { createElement, Fragment, useEffect, useRef, useState } from 'react';
 import { render } from 'react-dom';
-
-import { usePagination, useSearchBox } from 'react-instantsearch-core';
 import {
   autocomplete,
   AutocompleteOptions,
@@ -9,10 +7,11 @@ import {
   getAlgoliaResults,
 } from '@algolia/autocomplete-js';
 import { BaseItem } from '@algolia/autocomplete-core';
-import { debounce } from '@algolia/autocomplete-shared';
 import type { SearchClient } from 'algoliasearch/lite';
+import { usePagination, useSearchBox } from 'react-instantsearch-core';
 
 import '@algolia/autocomplete-theme-classic';
+import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 
 type AutocompleteProps = Partial<AutocompleteOptions<BaseItem>> & {
   searchClient: SearchClient;
@@ -37,10 +36,16 @@ export function Autocomplete({
 
   const [instantSearchUiState, setInstantSearchUiState] =
     useState<SetInstantSearchUiStateOptions>({ query });
-  const debouncedSetInstantSearchUiState = debounce(
-    setInstantSearchUiState,
-    500
-  );
+
+  const querySuggestionsPlugin = createQuerySuggestionsPlugin({
+    searchClient,
+    indexName: searchIndex,
+    getSearchParams() {
+      return {
+        hitsPerPage: 10,
+      };
+    },
+  });
 
   useEffect(() => {
     setQuery(instantSearchUiState.query);
@@ -53,15 +58,15 @@ export function Autocomplete({
     }
 
     const autocompleteInstance = autocomplete({
-      ...autocompleteProps,
       debug: true,
       container: autocompleteContainer.current,
-      initialState: { query },
+      // initialState: { query },
+      // plugins: [querySuggestionsPlugin],
+      insights: true,
       getSources() {
         return [
           {
-            sourceId: 'querySuggestions',
-            getItemInputValue: ({ item }) => item.query,
+            sourceId: 'uniqueIdTbd',
             getItems({ query }) {
               return getAlgoliaResults({
                 searchClient,
@@ -69,21 +74,13 @@ export function Autocomplete({
                   {
                     indexName: searchIndex,
                     query,
-                    params: {
-                      hitsPerPage: 5,
-                    },
                   },
                 ],
               });
             },
-            templates: {
-              item({ item, components }) {
-                return components.ReverseHighlight({
-                  hit: item,
-                  attribute: 'query',
-                });
-              },
-            },
+            // getItemUrl({ item }) {
+            //   return item.url;
+            // },
           },
         ];
       },
@@ -94,10 +91,26 @@ export function Autocomplete({
         setInstantSearchUiState({ query: state.query });
       },
       renderer: { createElement, Fragment, render: render as Render },
+      navigator: {
+        navigate({ itemUrl }) {
+          window.location.assign(itemUrl);
+        },
+        navigateNewTab({ itemUrl }) {
+          const windowReference = window.open(itemUrl, '_blank', 'noopener');
+
+          if (windowReference) {
+            windowReference.focus();
+          }
+        },
+        navigateNewWindow({ itemUrl }) {
+          window.open(itemUrl, '_blank', 'noopener');
+        },
+      },
+      ...autocompleteProps,
     });
 
     return () => autocompleteInstance.destroy();
-  }, [autocompleteProps, query]);
+  }, [autocompleteProps, query, searchClient, searchIndex]);
 
   return <div className={className} ref={autocompleteContainer} />;
 }
