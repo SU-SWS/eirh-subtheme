@@ -4,7 +4,7 @@ Date: 2024-02-22
 
 ## Status
 
-WORK IN PROGRESS
+Accepted
 
 ## Context
 
@@ -19,17 +19,19 @@ We need to choose a state management tool for our Vite + React application to ma
 
 ## Decision
 
-After evaluating several state management options, including Redux Toolkit, React Context, Zustand, and Recoil.js, we have decided to adopt Recoil.js as our state management tool.
+After evaluating several state management options, including Redux Toolkit, React Context, Zustand, and Recoil.js, we have decided to adopt Redux Toolkit as our state management tool.
 
 ## Consequences
 
-By selecting Recoil.js as our state management tool, we anticipate the following consequences:
+By selecting Redux Toolkit as our state management tool, we anticipate the following consequences:
 
-- Team members may need time to learn and familiarize themselves with Recoil.js along with its concepts, especially if they are accustomed to using Redux or other state management libraries.
+- Redux Toolkit's mature ecosystem and large community will provide ample resources and support for developers, facilitating a smoother transition and ongoing development process.
 
-- Recoil.js is a relatively new library compared to Redux and React Context, which may result in a smaller community and ecosystem. However, Recoil.js has gained traction within the React community, and it is believed that more will adopt the library as it continues to grow over time.
+- Migrating directly to Redux Toolkit avoids potential future migrations from Recoil.js to Redux Toolkit, reducing the need for additional refactoring and ensuring a more straightforward development path.
 
-- If we decide to migrate from Recoil.js to another state management solution in the future, we may need to refactor parts of our application to accommodate the differences in API and concepts.
+- Redux Toolkit's advanced features, such as built-in Immer support for immutable updates and simplified Redux boilerplate, will enhance developer productivity and codebase maintainability from the outset.
+
+- Aligning with Redux Toolkit aligns with established practices within the React ecosystem, contributing to the long-term maintainability and scalability of our application.
 
 ## Pros and Cons of the Options
 
@@ -70,5 +72,5 @@ By selecting Recoil.js as our state management tool, we anticipate the following
 * Bad, relatively new ecosystem and community in comparison to Redux.
 
 ## More information
-- [Recoil.js Documentation](https://recoiljs.org/)
-- [Recoil.js GitHub Repository](https://github.com/facebookexperimental/Recoil)
+- [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
+- [Redux Toolkit GitHub Repository](https://github.com/reduxjs/redux-toolkit)
