@@ -1,18 +1,13 @@
-import { useState } from 'react'
+import { SearchTab } from './component/SearchTab';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <h2 className="text-digital-red">Vite + React</h2>
-      <div>
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-    </>
-  )
+    <div>
+      <h2>Vite + React</h2>
+      <SearchTab searchIndex='SERENE ALL - appEb3LGlZS9OfNrK - Web Only' />
+    </div>
+  );
 }
 
-export default App
+export default App;
