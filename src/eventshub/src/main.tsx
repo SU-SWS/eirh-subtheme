@@ -1,5 +1,7 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('su-eventshub'));
+const container = document.getElementById('su-eventshub');
+const root = createRoot(container!);
+root.render(<App />);

@@ -50,7 +50,7 @@ By selecting Vite as our toolchain, we anticipate the following consequences:
 
 ### Create React App
 
-* Good, oinionated, out-of-the-box setup, requiring minimal configuration to get started.
+* Good, opinionated, out-of-the-box setup, requiring minimal configuration to get started.
 * Good, well-established ecosystem and extensive tooling support within the React community.
 * Good, simplified development workflow, suitable for beginners and rapid prototyping.
 * Bad, no longer receiving updates and maintenance from Facebook's React team.
