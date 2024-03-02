@@ -1,38 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FiltersState {
-  values: Record<string, string>;
-}
-
-interface SetFilterPayload {
-  filterType: string;
-  value: string;
+  selectedFilters: string[];
 }
 
 const initialState: FiltersState = {
-  values: {},
+  selectedFilters: [],
 };
 
-export const filtersSlice = createSlice({
-  name: 'filters',
+const filterSlice = createSlice({
+  name: 'filter',
   initialState,
   reducers: {
-    setFilter: (state, action: PayloadAction<SetFilterPayload>) => {
-      const { filterType, value } = action.payload;
-      state.values[filterType] = value;
+    addFilter: (state, action: PayloadAction<string>) => {
+      state.selectedFilters.push(action.payload);
+    },
+    removeFilter: (state, action: PayloadAction<string>) => {
+      state.selectedFilters = state.selectedFilters.filter(filter => filter !== action.payload);
     },
     clearFilters: (state) => {
-      state.values = {};
-    },
+      state.selectedFilters = [];
+    }
   },
 });
 
-export const { setFilter, clearFilters } = filtersSlice.actions;
-
-type RootState = {
-  filters: FiltersState;
-};
-
-export const selectFilters = (state: RootState) => state.filters.values;
-
-export default filtersSlice.reducer;
+export const { addFilter, removeFilter, clearFilters } = filterSlice.actions;
+export const selectFilters = (state: { filters: FiltersState }) => state.filters.selectedFilters;
+export default filterSlice.reducer;
