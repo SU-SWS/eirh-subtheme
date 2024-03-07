@@ -5,7 +5,9 @@ import {
   Pagination,
 } from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
-import { SearchItem } from '../SearchItem';
+import VendorSearchItem from '../SearchItem/VendorSearchItem';
+import VenueSearchItem from '../SearchItem/VenueSearchItem';
+import PolicySearchItem from '../SearchItem/PolicySearchItem';
 import searchClient from '../../utilities/algoliaConfig';
 import SearchFilter from '../SearchFilter/SearchFilter';
 import { Grid } from '../Grid';
@@ -27,11 +29,36 @@ const mockFilterData: FilterCategory[] = [
   },
 ];
 
-type SearchTabProps = {
-  searchIndex: string;
+interface SearchTabProps {
+  searchIndex: 'venues' | 'vendors' | 'policies';
+}
+
+// Mapping from your simple identifiers to Algolia index names
+const algoliaIndexMap: Record<string, string> = {
+  venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
+  vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
+  policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
 };
 
 export const SearchTab = ({ searchIndex }: SearchTabProps) => {
+  const algoliaIndexName = algoliaIndexMap[searchIndex];
+  console.log('algoliaIndexName', algoliaIndexName);
+
+  const getSearchItemComponent = () => {
+    switch (searchIndex) {
+      case 'venues':
+        return VenueSearchItem;
+      case 'vendors':
+        return VendorSearchItem;
+      case 'policies':
+        return PolicySearchItem;
+      default:
+        return VenueSearchItem;
+    }
+  };
+
+  const SearchItemComponent = getSearchItemComponent();
+
   return (
     <div>
       <InstantSearch
@@ -44,14 +71,15 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
           <FlexBox direction='col' className='col-span-3'>
             <Autocomplete
               searchClient={searchClient}
-              searchIndex={searchIndex}
-              placeholder='Search by venues'
+              searchIndex={algoliaIndexName}
+              placeholder={`Search by ${searchIndex}`}
               detachedMediaQuery='none'
               openOnFocus
             />
             {mockFilterData.map((category) => {
               return (
                 <SearchFilter
+                  key={category.name}
                   title={category.name}
                   filterOptions={category.options}
                 />
@@ -59,7 +87,7 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
             })}
           </FlexBox>
           <FlexBox direction='col' className='col-span-9'>
-            <Hits hitComponent={SearchItem} />
+            <Hits hitComponent={SearchItemComponent} />
             <Pagination />
           </FlexBox>
         </Grid>

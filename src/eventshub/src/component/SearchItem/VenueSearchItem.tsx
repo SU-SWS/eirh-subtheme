@@ -1,6 +1,7 @@
 import { Hit as AlgoliaHit } from 'instantsearch.js/es/types'; 
 import Cta from '../Cta/Cta';
 import { Heading, Paragraph } from '../Typography';
+import TypeList from './TypeList';
 
 interface AirtableImageData {
   filename: string;
@@ -17,10 +18,9 @@ interface AirtableImageData {
   width: number;
 }
 
-type SearchItemProps = {
+type VenueSearchItemProps = {
   hit: AlgoliaHit<{
     image?: AirtableImageData[];
-    name?: string;
     venue_name?: string;
     type_of_space_or_venue?: string[];
     short_description?: string;
@@ -28,17 +28,7 @@ type SearchItemProps = {
   }>;
 };
 
-interface TypeListProps {
-  items: string[];
-}
-
-const TypeList: React.FC<TypeListProps> = ({ items }) => {
-  return (
-    <Paragraph>{items.join(', ')}</Paragraph>
-  );
-};
-
-export function SearchItem({ hit }: SearchItemProps) {
+const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
   return (
     <article>
       {hit.image && hit.image.length > 0 ? <img src={hit.image[0].url} alt={hit.venue_name} /> : null}
@@ -49,3 +39,5 @@ export function SearchItem({ hit }: SearchItemProps) {
     </article>
   );
 }
+
+export default VenueSearchItem
