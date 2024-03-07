@@ -33,7 +33,6 @@ interface SearchTabProps {
   searchIndex: 'venues' | 'vendors' | 'policies';
 }
 
-// Mapping from your simple identifiers to Algolia index names
 const algoliaIndexMap: Record<string, string> = {
   venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
   vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
@@ -42,7 +41,6 @@ const algoliaIndexMap: Record<string, string> = {
 
 export const SearchTab = ({ searchIndex }: SearchTabProps) => {
   const algoliaIndexName = algoliaIndexMap[searchIndex];
-  console.log('algoliaIndexName', algoliaIndexName);
 
   const getSearchItemComponent = () => {
     switch (searchIndex) {
@@ -63,7 +61,7 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
     <div>
       <InstantSearch
         searchClient={searchClient}
-        indexName={searchIndex}
+        indexName={algoliaIndexName}
         routing
       >
         <Configure hitsPerPage={40} />
