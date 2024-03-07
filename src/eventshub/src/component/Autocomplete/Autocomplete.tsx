@@ -36,8 +36,6 @@ export function Autocomplete({
 
   const [instantSearchUiState, setInstantSearchUiState] =
     useState<SetInstantSearchUiStateOptions>({ query });
-
-  console.log('INDEX', searchIndex);
   
   useEffect(() => {
     setQuery(instantSearchUiState.query);
