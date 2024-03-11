@@ -12,6 +12,7 @@ import searchClient from '../../utilities/algoliaConfig';
 import SearchFilter from '../SearchFilter/SearchFilter';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
+import CustomHits from '../CustomHits/CustomHits';
 
 interface FilterCategory {
   name: string;
@@ -85,7 +86,7 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
             })}
           </FlexBox>
           <FlexBox direction='col' className='col-span-9'>
-            <Hits hitComponent={SearchItemComponent} />
+            <CustomHits hitComponent={SearchItemComponent}  />
             <Pagination />
           </FlexBox>
         </Grid>
