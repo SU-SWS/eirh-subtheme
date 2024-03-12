@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import filtersReducer from './slices/filtersSlice';
+import algoliaFilterDataReducer from './slices/algoliaFilterDataSlice';
 
 const store = configureStore({
   reducer: {
     filters: filtersReducer,
+    algoliaFilterData: algoliaFilterDataReducer,
   },
 });
 

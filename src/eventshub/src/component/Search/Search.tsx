@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SearchTab } from '../SearchTab';
 import {
   MapPinIcon,
@@ -40,7 +40,7 @@ export const Search = () => {
       </button>
       <button
         className={cnb(
-          activeTab === 'Policies'  && 'border-b-3 border-digital-red',
+          activeTab === 'Policies' && 'border-b-3 border-digital-red',
           'rs-mr-3 rs-pb-1 rs-mb-2 sans inline-block'
         )}
         onClick={() => handleTabClick('Policies')}

@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import {
   InstantSearch,
-  Hits,
   Configure,
   Pagination,
 } from 'react-instantsearch';
@@ -13,22 +13,7 @@ import SearchFilter from '../SearchFilter/SearchFilter';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
 import CustomHits from '../CustomHits/CustomHits';
-
-interface FilterCategory {
-  name: string;
-  options: string[];
-}
-
-const mockFilterData: FilterCategory[] = [
-  {
-    name: 'Category',
-    options: ['Books', 'Electronics', 'Clothing', 'Home & Kitchen'],
-  },
-  {
-    name: 'Tags',
-    options: ['New Arrival', 'On Sale', 'Best Sellers'],
-  },
-];
+import { algoliaFilterData, GroupedDataItem } from '../../utilities/algoliaFiltersData';
 
 interface SearchTabProps {
   searchIndex: 'venues' | 'vendors' | 'policies';
@@ -42,6 +27,22 @@ const algoliaIndexMap: Record<string, string> = {
 
 export const SearchTab = ({ searchIndex }: SearchTabProps) => {
   const algoliaIndexName = algoliaIndexMap[searchIndex];
+  const [algoliaData, setAlgoliaData] = useState<GroupedDataItem[]>([]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await algoliaFilterData();
+        console.log(data);
+        setAlgoliaData(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const getSearchItemComponent = () => {
     switch (searchIndex) {
@@ -75,12 +76,14 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
               detachedMediaQuery='none'
               openOnFocus
             />
-            {mockFilterData.map((category) => {
+            {algoliaData.map((category) => {
+               const eventFeatures = category.event_feature_group.map(item => item.event_feature);
+  
               return (
                 <SearchFilter
-                  key={category.name}
-                  title={category.name}
-                  filterOptions={category.options}
+                  key={category.feature_group}
+                  title={category.feature_group}
+                  filterOptions={eventFeatures}
                 />
               );
             })}
