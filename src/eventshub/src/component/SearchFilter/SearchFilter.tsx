@@ -29,10 +29,10 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
 
   const handleFilterToggle = (filter: EventFeatureGroupItem) => {
     if (selectedFilters.some((f) => f.event_feature === filter.event_feature)) {
-      console.log('REMOVE FILTER')
+      console.log('REMOVE FILTER');
       dispatch(removeFilter(filter));
     } else {
-      console.log('ADD FILTER')
+      console.log('ADD FILTER');
       dispatch(addFilter(filter));
     }
   };
@@ -57,16 +57,19 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         role='region'
         className={isOpen ? 'block' : 'hidden'}
       >
-        {filterOptions.map((feature) => (
+        {filterOptions.map((filter) => (
           <label
-            key={feature.event_feature}
+            key={filter.event_feature}
             className='flex items-center cursor-pointer text-19 hocus:underline'
           >
             <input
               type='checkbox'
-              onChange={() => handleFilterToggle(feature)}
+              checked={selectedFilters.some(
+                (f) => f.event_feature === filter.event_feature
+              )}
+              onChange={() => handleFilterToggle(filter)}
             />
-            <span>{feature.event_feature}</span>
+            <span>{filter.event_feature}</span>
           </label>
         ))}
       </FlexBox>
