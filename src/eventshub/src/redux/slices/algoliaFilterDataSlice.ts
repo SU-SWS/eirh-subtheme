@@ -21,4 +21,4 @@ const algoliaFilterDataSlice = createSlice({
 
 export const { setAlgoliaFilterData } = algoliaFilterDataSlice.actions;
 export const selectAlgoliaFilterData = (state: { algoliaFilterData: AlgoliaFilterDataState }) => state.algoliaFilterData.data;
-export default algoliaFilterDataSlice.reducer; 
+export default algoliaFilterDataSlice.reducer;

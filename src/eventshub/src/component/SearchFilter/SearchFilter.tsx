@@ -8,10 +8,11 @@ import {
 } from '../../redux/slices/filtersSlice';
 import { Heading } from '../Typography';
 import { FlexBox } from '../FlexBox';
+import { EventFeatureGroupItem } from '../../utilities/algoliaFiltersData';
 
 interface SearchFilterProps {
   title: string;
-  filterOptions: string[];
+  filterOptions: EventFeatureGroupItem[];
 }
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
@@ -26,10 +27,12 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   );
   const dispatch = useDispatch();
 
-  const handleFilterToggle = (filter: string) => {
-    if (selectedFilters.includes(filter)) {
+  const handleFilterToggle = (filter: EventFeatureGroupItem) => {
+    if (selectedFilters.some((f) => f.event_feature === filter.event_feature)) {
+      console.log('REMOVE FILTER')
       dispatch(removeFilter(filter));
     } else {
+      console.log('ADD FILTER')
       dispatch(addFilter(filter));
     }
   };
@@ -54,18 +57,16 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         role='region'
         className={isOpen ? 'block' : 'hidden'}
       >
-        {filterOptions.map((filter) => (
+        {filterOptions.map((feature) => (
           <label
-            key={filter}
+            key={feature.event_feature}
             className='flex items-center cursor-pointer text-19 hocus:underline'
           >
             <input
               type='checkbox'
-              value={filter}
-              checked={selectedFilters.includes(filter)}
-              onChange={() => handleFilterToggle(filter)}
+              onChange={() => handleFilterToggle(feature)}
             />
-            <span>{filter}</span>
+            <span>{feature.event_feature}</span>
           </label>
         ))}
       </FlexBox>

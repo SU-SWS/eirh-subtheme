@@ -77,13 +77,12 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
               openOnFocus
             />
             {algoliaData.map((category) => {
-               const eventFeatures = category.event_feature_group.map(item => item.event_feature);
-  
+
               return (
                 <SearchFilter
                   key={category.feature_group}
                   title={category.feature_group}
-                  filterOptions={eventFeatures}
+                  filterOptions={category.event_feature_group}
                 />
               );
             })}
