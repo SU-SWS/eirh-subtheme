@@ -25,6 +25,7 @@ export interface DataItem {
   'policies:_logistics_categories_column': string[];
   'vendors:_service_type': string[];
   'venues:_space_type': string[];
+  weight: number;
 }
 
 export interface EventFeatureGroupItem {
@@ -32,6 +33,7 @@ export interface EventFeatureGroupItem {
   venues: string[];
   vendors: string[];
   policies: string[];
+  weight: number,
 }
 
 export interface GroupedDataItem {
@@ -50,7 +52,10 @@ export const restructureData = (data: DataItem[]): GroupedDataItem[] => {
       venues: item['venues:_space_type'],
       vendors: item['vendors:_service_type'],
       policies: item['policies:_logistics_categories_column'],
+      weight: item.weight
     }));
+
+    eventFeatureGroup.sort((a, b) => a.weight - b.weight);
 
     return {
       feature_group: group,
