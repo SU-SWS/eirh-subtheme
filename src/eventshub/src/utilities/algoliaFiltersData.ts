@@ -47,13 +47,19 @@ export const restructureData = (data: DataItem[]): GroupedDataItem[] => {
   return uniqueFeatureGroups.map((group) => {
     const itemsInGroup: DataItem[] = data.filter(item => item.feature_group === group);
 
-    const eventFeatureGroup: EventFeatureGroupItem[] = itemsInGroup.map(item => ({
-      event_feature: item.event_feature,
-      venues: item['venues:_space_type'],
-      vendors: item['vendors:_service_type'],
-      policies: item['policies:_logistics_categories_column'],
-      weight: item.weight
-    }));
+    const eventFeatureGroup: EventFeatureGroupItem[] = itemsInGroup.map(item => {
+      const venues = splitIfNecessary(item['venues:_space_type']);
+      const vendors = splitIfNecessary(item['vendors:_service_type']);
+      const policies = splitIfNecessary(item['policies:_logistics_categories_column']);
+
+      return {
+        event_feature: item.event_feature,
+        venues,
+        vendors,
+        policies,
+        weight: item.weight
+      };
+    });
 
     eventFeatureGroup.sort((a, b) => a.weight - b.weight);
 
@@ -63,6 +69,21 @@ export const restructureData = (data: DataItem[]): GroupedDataItem[] => {
     };
   });
 }
+
+// The airtable relationship data occasionally groups the query items
+// e.g. Change 
+// "venues": ["Auditorium/Auditoria, Performance Hall, Performance Space"]
+// to
+// "venues": ["Auditorium/Auditoria", "Performance Hall", "Performance Space"],
+const splitIfNecessary = (value: string | string[]): string[] => {
+  if (Array.isArray(value)) {
+    return value.flatMap(item => item.split(', '));
+  } else if (typeof value === 'string') {
+    return value.split(', ');
+  } else {
+    return [];
+  }
+};
 
 export const algoliaFilterData = async (): Promise<GroupedDataItem[]> => {
   const algoliaData = await fetchAlgoliaData();

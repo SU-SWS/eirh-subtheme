@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { InstantSearch, Configure, Pagination } from 'react-instantsearch';
+import {
+  InstantSearch,
+  Configure,
+  Pagination,
+  Hits,
+} from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
@@ -27,6 +32,12 @@ const algoliaIndexMap: Record<string, string> = {
   policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
 };
 
+const algoliaFacetMap: Record<string, string> = {
+  venues: 'type_of_space_or_venue',
+  vendors: 'service_type',
+  policies: 'logistics_categories',
+};
+
 export const SearchTab = ({ searchIndex }: SearchTabProps) => {
   const algoliaIndexName = algoliaIndexMap[searchIndex];
   const [algoliaData, setAlgoliaData] = useState<GroupedDataItem[]>([]);
@@ -49,14 +60,24 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
 
   useEffect(() => {
     console.log('RAW DATA:', selectedFilters);
+    if (selectedFilters.length === 0) {
+      setFilterData('');
+      return;
+    }
+
     const data = getFilterData(selectedFilters, searchIndex);
-    if (data.length === 0) return;
     console.log('MODIFIED DATA:', data);
     console.log(
       'FILTERED DATA:',
-      `(${data.map((filter) => `"${filter}"`).join(' AND ')})`
+      `(${data
+        .map((filter) => `${algoliaFacetMap[searchIndex]}:"${filter}"`)
+        .join(' AND ')})`
     );
-    setFilterData(`(${data.map((filter) => `"${filter}"`).join(' AND ')})`);
+    setFilterData(
+      `(${data
+        .map((filter) => `${algoliaFacetMap[searchIndex]}:"${filter}"`)
+        .join(' AND ')})`
+    );
   }, [selectedFilters, searchIndex]);
 
   const getSearchItemComponent = () => {
@@ -81,10 +102,7 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
         indexName={algoliaIndexName}
         routing
       >
-        <Configure
-          hitsPerPage={40}
-          // filters={filterData}
-        />
+        <Configure hitsPerPage={40} filters={filterData} />
         <Grid gap='default' md={12}>
           <FlexBox direction='col' className='col-span-3'>
             <Autocomplete
@@ -105,7 +123,8 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
             })}
           </FlexBox>
           <FlexBox direction='col' className='col-span-9'>
-            <CustomHits hitComponent={SearchItemComponent} />
+            <Hits hitComponent={SearchItemComponent} />
+            {/* <CustomHits hitComponent={SearchItemComponent} /> */}
             <Pagination />
           </FlexBox>
         </Grid>
