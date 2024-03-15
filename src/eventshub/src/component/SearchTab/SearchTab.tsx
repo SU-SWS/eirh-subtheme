@@ -97,13 +97,14 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
         indexName={algoliaIndexName}
         routing
       >
-        <Configure hitsPerPage={40} filters={filterData} />
+        <Configure hitsPerPage={25} filters={filterData} />
         <Grid gap='default' md={12}>
           <FlexBox direction='col' className='col-span-3'>
             <Autocomplete
               searchClient={searchClient}
               searchIndex={algoliaIndexName}
               placeholder={`Search by ${searchIndex}`}
+              filtersQuery={filterData}
               detachedMediaQuery='none'
               openOnFocus
             />

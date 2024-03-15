@@ -17,6 +17,7 @@ type AutocompleteProps = Partial<AutocompleteOptions<BaseItem>> & {
   searchClient: SearchClient;
   className?: string;
   searchIndex: string;
+  filtersQuery?: string;
 };
 
 type SetInstantSearchUiStateOptions = {
@@ -27,10 +28,11 @@ export function Autocomplete({
   searchClient,
   className,
   searchIndex,
+  filtersQuery,
   ...autocompleteProps
 }: AutocompleteProps) {
   const autocompleteContainer = useRef<HTMLDivElement>(null);
-
+console.log('searchIndex', searchIndex)
   const { query, refine: setQuery } = useSearchBox();
   const { refine: setPage } = usePagination();
 
@@ -48,7 +50,6 @@ export function Autocomplete({
     }
 
     const autocompleteInstance = autocomplete({
-      debug: true,
       container: autocompleteContainer.current,
       getSources() {
         return [
@@ -61,6 +62,9 @@ export function Autocomplete({
                   {
                     indexName: searchIndex,
                     query,
+                    params: {
+                      filters: filtersQuery,
+                    }
                   },
                 ],
               });
@@ -73,12 +77,6 @@ export function Autocomplete({
                       <div className='aa-ItemContentBody'>
                         <div className='aa-ItemContentTitle'>
                           <components.Snippet hit={item} attribute='name' />
-                        </div>
-                        <div className='aa-ItemContentDescription'>
-                          <components.Snippet
-                            hit={item}
-                            attribute='description'
-                          />
                         </div>
                       </div>
                     </div>
@@ -115,7 +113,7 @@ export function Autocomplete({
     });
 
     return () => autocompleteInstance.destroy();
-  }, [autocompleteProps, searchClient, searchIndex]);
+  }, [autocompleteProps, filtersQuery, searchClient, searchIndex]);
 
   return <div className={className} ref={autocompleteContainer} />;
 }
