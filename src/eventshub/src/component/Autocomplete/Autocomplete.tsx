@@ -1,14 +1,14 @@
 import { createElement, Fragment, useEffect, useRef, useState } from 'react';
-import { render } from 'react-dom';
 import {
   autocomplete,
   AutocompleteOptions,
-  Render,
   getAlgoliaResults,
 } from '@algolia/autocomplete-js';
 import { BaseItem } from '@algolia/autocomplete-core';
 import type { SearchClient } from 'algoliasearch/lite';
 import { usePagination, useSearchBox } from 'react-instantsearch-core';
+import type { Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 // TODO: Determine if we should build upon or remove algolia styles
 import '@algolia/autocomplete-theme-classic';
@@ -32,7 +32,9 @@ export function Autocomplete({
   ...autocompleteProps
 }: AutocompleteProps) {
   const autocompleteContainer = useRef<HTMLDivElement>(null);
-console.log('searchIndex', searchIndex)
+  const panelRootRef = useRef<Root | null>(null);
+  const rootRef = useRef<HTMLElement | null>(null);
+
   const { query, refine: setQuery } = useSearchBox();
   const { refine: setPage } = usePagination();
 
@@ -93,7 +95,20 @@ console.log('searchIndex', searchIndex)
       onSubmit({ state }) {
         setInstantSearchUiState({ query: state.query });
       },
-      renderer: { createElement, Fragment, render: render as Render },
+      renderer: {
+        createElement, Fragment, render: () => {
+        }
+      },
+      render({ children }, root) {
+        if (!panelRootRef.current || rootRef.current !== root) {
+          rootRef.current = root;
+
+          panelRootRef.current?.unmount();
+          panelRootRef.current = createRoot(root);
+        }
+
+        panelRootRef.current.render(children);
+      },
       navigator: {
         navigate({ itemUrl }) {
           window.location.assign(itemUrl);
