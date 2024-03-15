@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  InstantSearch,
-  Configure,
-  Pagination,
-  Hits,
-} from 'react-instantsearch';
+import { InstantSearch, Configure, Pagination } from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
@@ -71,12 +66,12 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
       'FILTERED DATA:',
       `(${data
         .map((filter) => `${algoliaFacetMap[searchIndex]}:"${filter}"`)
-        .join(' AND ')})`
+        .join(' OR ')})`
     );
     setFilterData(
       `(${data
         .map((filter) => `${algoliaFacetMap[searchIndex]}:"${filter}"`)
-        .join(' AND ')})`
+        .join(' OR ')})`
     );
   }, [selectedFilters, searchIndex]);
 
@@ -123,8 +118,7 @@ export const SearchTab = ({ searchIndex }: SearchTabProps) => {
             })}
           </FlexBox>
           <FlexBox direction='col' className='col-span-9'>
-            <Hits hitComponent={SearchItemComponent} />
-            {/* <CustomHits hitComponent={SearchItemComponent} /> */}
+            <CustomHits hitComponent={SearchItemComponent} />
             <Pagination />
           </FlexBox>
         </Grid>
