@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { SearchTab } from '../SearchTab';
 import {
   MapPinIcon,
   UserIcon,
