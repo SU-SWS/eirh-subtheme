@@ -1,7 +1,7 @@
 import { EventFeatureGroupItem } from './algoliaFiltersData';
 
 
-export const getFilterData = (selectedFilters: EventFeatureGroupItem[], dataType: 'vendors' | 'venues' | 'policies'): string[] => {
+export const getFilterData = (selectedFilters: EventFeatureGroupItem[], dataType: string): string[] => {
   let dataArray: string[] = [];
 
   selectedFilters.forEach((filter) => {
