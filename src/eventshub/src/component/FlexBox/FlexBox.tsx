@@ -1,4 +1,4 @@
-import React, { ReactNode, HTMLAttributes } from 'react';
+import { ReactNode, HTMLAttributes } from 'react';
 import { cnb } from 'cnbuilder';
 import * as styles from './FlexBox.styles';
 import * as types from './FlexBox.types';
