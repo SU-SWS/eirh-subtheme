@@ -1,3 +1,21 @@
-@tailwind base;
+/* Override Drupal */
+#su-eventshub button {
+  background: unset;
+  color: unset; }
+
+[type="checkbox"] {
+  clip: unset;
+  border: unset;
+  -webkit-clip-path: unset;
+  clip-path: unset;
+  height: unset;
+  overflow: unset;
+  padding: unset;
+  position: unset;
+  white-space: unset;
+  width: unset;
+}
+
+/* TW */
 @tailwind components;
 @tailwind utilities;
