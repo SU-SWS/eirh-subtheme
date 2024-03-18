@@ -27,6 +27,7 @@ import SearchFilter from '../SearchFilter/SearchFilter';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
 import CustomHits from '../CustomHits/CustomHits';
+import { FilterChips } from '../FilterChips/FilterChips';
 
 const algoliaIndexMap: Record<string, string> = {
   venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
@@ -157,6 +158,7 @@ export const Search = () => {
                 detachedMediaQuery='none'
                 openOnFocus
               />
+              <FilterChips />
               {algoliaData.map((category) => {
                 return (
                   <SearchFilter
