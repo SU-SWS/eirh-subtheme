@@ -46,7 +46,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           onClick={handleOpen}
           aria-controls='accordion-content'
         >
-          <Heading as='h3'>{title}</Heading>
+          <Heading as='h4' size='base'>{title}</Heading>
         </button>
       </div>
       <FlexBox
