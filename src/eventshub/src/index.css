@@ -3,7 +3,7 @@
   background: unset;
   color: unset; }
 
-[type="checkbox"] {
+#su-eventshub [type="checkbox"] {
   clip: unset;
   border: unset;
   -webkit-clip-path: unset;
