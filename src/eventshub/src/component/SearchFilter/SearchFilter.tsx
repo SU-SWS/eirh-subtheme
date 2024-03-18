@@ -8,10 +8,11 @@ import {
 } from '../../redux/slices/filtersSlice';
 import { Heading } from '../Typography';
 import { FlexBox } from '../FlexBox';
+import { EventFeatureGroupItem } from '../../utilities/algoliaFiltersData';
 
 interface SearchFilterProps {
   title: string;
-  filterOptions: string[];
+  filterOptions: EventFeatureGroupItem[];
 }
 
 const SearchFilter: React.FC<SearchFilterProps> = ({
@@ -26,10 +27,12 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   );
   const dispatch = useDispatch();
 
-  const handleFilterToggle = (filter: string) => {
-    if (selectedFilters.includes(filter)) {
+  const handleFilterToggle = (filter: EventFeatureGroupItem) => {
+    if (selectedFilters.some((f) => f.event_feature === filter.event_feature)) {
+      console.log('REMOVE FILTER');
       dispatch(removeFilter(filter));
     } else {
+      console.log('ADD FILTER');
       dispatch(addFilter(filter));
     }
   };
@@ -43,7 +46,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           onClick={handleOpen}
           aria-controls='accordion-content'
         >
-          <Heading as='h3'>{title}</Heading>
+          <Heading as='h4' size='base'>{title}</Heading>
         </button>
       </div>
       <FlexBox
@@ -56,16 +59,17 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
       >
         {filterOptions.map((filter) => (
           <label
-            key={filter}
+            key={filter.event_feature}
             className='flex items-center cursor-pointer text-19 hocus:underline'
           >
             <input
               type='checkbox'
-              value={filter}
-              checked={selectedFilters.includes(filter)}
+              checked={selectedFilters.some(
+                (f) => f.event_feature === filter.event_feature
+              )}
               onChange={() => handleFilterToggle(filter)}
             />
-            <span>{filter}</span>
+            <span>{filter.event_feature}</span>
           </label>
         ))}
       </FlexBox>

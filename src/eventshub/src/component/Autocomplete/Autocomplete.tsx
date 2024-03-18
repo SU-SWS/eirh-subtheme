@@ -1,14 +1,14 @@
 import { createElement, Fragment, useEffect, useRef, useState } from 'react';
-import { render } from 'react-dom';
 import {
   autocomplete,
   AutocompleteOptions,
-  Render,
   getAlgoliaResults,
 } from '@algolia/autocomplete-js';
 import { BaseItem } from '@algolia/autocomplete-core';
 import type { SearchClient } from 'algoliasearch/lite';
 import { usePagination, useSearchBox } from 'react-instantsearch-core';
+import type { Root } from 'react-dom/client';
+import { createRoot } from 'react-dom/client';
 
 // TODO: Determine if we should build upon or remove algolia styles
 import '@algolia/autocomplete-theme-classic';
@@ -17,6 +17,7 @@ type AutocompleteProps = Partial<AutocompleteOptions<BaseItem>> & {
   searchClient: SearchClient;
   className?: string;
   searchIndex: string;
+  filtersQuery?: string;
 };
 
 type SetInstantSearchUiStateOptions = {
@@ -27,9 +28,12 @@ export function Autocomplete({
   searchClient,
   className,
   searchIndex,
+  filtersQuery,
   ...autocompleteProps
 }: AutocompleteProps) {
   const autocompleteContainer = useRef<HTMLDivElement>(null);
+  const panelRootRef = useRef<Root | null>(null);
+  const rootRef = useRef<HTMLElement | null>(null);
 
   const { query, refine: setQuery } = useSearchBox();
   const { refine: setPage } = usePagination();
@@ -48,7 +52,6 @@ export function Autocomplete({
     }
 
     const autocompleteInstance = autocomplete({
-      debug: true,
       container: autocompleteContainer.current,
       getSources() {
         return [
@@ -61,6 +64,9 @@ export function Autocomplete({
                   {
                     indexName: searchIndex,
                     query,
+                    params: {
+                      filters: filtersQuery,
+                    }
                   },
                 ],
               });
@@ -73,12 +79,6 @@ export function Autocomplete({
                       <div className='aa-ItemContentBody'>
                         <div className='aa-ItemContentTitle'>
                           <components.Snippet hit={item} attribute='name' />
-                        </div>
-                        <div className='aa-ItemContentDescription'>
-                          <components.Snippet
-                            hit={item}
-                            attribute='description'
-                          />
                         </div>
                       </div>
                     </div>
@@ -95,7 +95,20 @@ export function Autocomplete({
       onSubmit({ state }) {
         setInstantSearchUiState({ query: state.query });
       },
-      renderer: { createElement, Fragment, render: render as Render },
+      renderer: {
+        createElement, Fragment, render: () => {
+        }
+      },
+      render({ children }, root) {
+        if (!panelRootRef.current || rootRef.current !== root) {
+          rootRef.current = root;
+
+          panelRootRef.current?.unmount();
+          panelRootRef.current = createRoot(root);
+        }
+
+        panelRootRef.current.render(children);
+      },
       navigator: {
         navigate({ itemUrl }) {
           window.location.assign(itemUrl);
@@ -115,7 +128,7 @@ export function Autocomplete({
     });
 
     return () => autocompleteInstance.destroy();
-  }, [autocompleteProps, searchClient, searchIndex]);
+  }, [autocompleteProps, filtersQuery, searchClient, searchIndex]);
 
   return <div className={className} ref={autocompleteContainer} />;
 }
