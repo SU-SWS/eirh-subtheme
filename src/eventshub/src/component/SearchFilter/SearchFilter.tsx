@@ -60,7 +60,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         {filterOptions.map((filter) => (
           <label
             key={filter.event_feature}
-            className='er-flex er-items-center er-cursor-pointer er-text-19 er-hocus:underline'
+            className='er-flex er-items-center er-cursor-pointer er-text-19 hocus:er-underline'
           >
             <input
               type='checkbox'

@@ -29,7 +29,7 @@ export const FilterChips = () => {
       <div>
         {selectedFilters.map((filter, index) => (
           <button key={index} onClick={() => removeEventFilter(filter)}
-          className="er-inline-block er-group er-hover:underline er-focus-visible:underline er-transition er-text-16 er-pt-7 er-pb-8 er-px-18 er-font-regular er-rounded-full er-shadow er-hover:shadow-md er-focus:shadow er-active:shadow er-no-underline er-underline-offset-2 er-leading-display er-bg-white er-hocus:bg-digital-blue-20 er-text-digital-blue er-hocus:text-digital-blue-dark er-border-2 er-border-digital-blue er-focus:ring-2 er-active:ring-2 er-focus:ring-digital-blue-40 er-active:ring-digital-blue-40 er-outline-none er-hocus:decoration-digital-blue er-hocus:decoration-1"
+          className="er-inline-block er-group hover:er-underline focus-visible:er-underline er-transition er-text-16 er-pt-7 er-pb-8 er-px-18 er-font-regular er-rounded-full er-shadow hover:er-shadow-md focus:er-shadow active:er-shadow er-no-underline er-underline-offset-2 er-leading-display er-bg-white hocus:er-bg-digital-blue-20 er-text-digital-blue hocus:er-text-digital-blue-dark er-border-2 er-border-digital-blue focus:er-ring-2 active:er-ring-2 focus:er-ring-digital-blue-40 active:er-ring-digital-blue-40 er-outline-none hocus:er-decoration-digital-blue hocus:er-decoration-1"
           >
             {filter.event_feature}
             <XMarkIcon className='er-w-1em er-inline-block er-ml-3' />

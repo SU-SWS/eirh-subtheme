@@ -17,5 +17,6 @@
 }
 
 /* TW */
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
