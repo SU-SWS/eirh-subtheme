@@ -171,7 +171,7 @@ export const Search = () => {
             </FlexBox>
             <FlexBox direction='col' className='er-col-span-9'>
               <CustomHits hitComponent={SearchItemComponent} />
-              <Pagination className="children:er-list-none children:er-flex children:er-justify-center children:er-children:m-10" />
+              <Pagination className="children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10" />
             </FlexBox>
           </Grid>
         </InstantSearch>
