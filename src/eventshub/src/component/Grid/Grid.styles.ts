@@ -1,116 +1,112 @@
-// Add options as needed
 export const gridNumCols = {
   xs: {
-    1: 'grid-cols-1',
-    2: 'grid-cols-2',
-    3: 'grid-cols-3',
-    4: 'grid-cols-4',
-    6: 'grid-cols-6',
-    12: 'grid-cols-12',
+    1: 'er-grid-cols-1',
+    2: 'er-grid-cols-2',
+    3: 'er-grid-cols-3',
+    4: 'er-grid-cols-4',
+    6: 'er-grid-cols-6',
+    12: 'er-grid-cols-12',
   },
   sm: {
-    1: 'sm:grid-cols-1',
-    2: 'sm:grid-cols-2',
-    3: 'sm:grid-cols-3',
-    4: 'sm:grid-cols-4',
-    6: 'sm:grid-cols-6',
-    12: 'sm:grid-cols-12',
+    1: 'er-sm:grid-cols-1',
+    2: 'er-sm:grid-cols-2',
+    3: 'er-sm:grid-cols-3',
+    4: 'er-sm:grid-cols-4',
+    6: 'er-sm:grid-cols-6',
+    12: 'er-sm:grid-cols-12',
   },
   md: {
-    1: 'md:grid-cols-1',
-    2: 'md:grid-cols-2',
-    3: 'md:grid-cols-3',
-    4: 'md:grid-cols-4',
-    6: 'md:grid-cols-6',
-    12: 'md:grid-cols-12',
+    1: 'er-md:grid-cols-1',
+    2: 'er-md:grid-cols-2',
+    3: 'er-md:grid-cols-3',
+    4: 'er-md:grid-cols-4',
+    6: 'er-md:grid-cols-6',
+    12: 'er-md:grid-cols-12',
   },
   lg: {
-    1: 'lg:grid-cols-1',
-    2: 'lg:grid-cols-2',
-    3: 'lg:grid-cols-3',
-    4: 'lg:grid-cols-4',
-    6: 'lg:grid-cols-6',
-    12: 'lg:grid-cols-12',
+    1: 'er-lg:grid-cols-1',
+    2: 'er-lg:grid-cols-2',
+    3: 'er-lg:grid-cols-3',
+    4: 'er-lg:grid-cols-4',
+    6: 'er-lg:grid-cols-6',
+    12: 'er-lg:grid-cols-12',
   },
   xl: {
-    1: 'xl:grid-cols-1',
-    2: 'xl:grid-cols-2',
-    3: 'xl:grid-cols-3',
-    4: 'xl:grid-cols-4',
-    6: 'xl:grid-cols-6',
-    12: 'xl:grid-cols-12',
+    1: 'er-xl:grid-cols-1',
+    2: 'er-xl:grid-cols-2',
+    3: 'er-xl:grid-cols-3',
+    4: 'er-xl:grid-cols-4',
+    6: 'er-xl:grid-cols-6',
+    12: 'er-xl:grid-cols-12',
   },
   xxl: {
-    1: '2xl:grid-cols-1',
-    2: '2xl:grid-cols-2',
-    3: '2xl:grid-cols-3',
-    4: '2xl:grid-cols-4',
-    6: '2xl:grid-cols-6',
-    12: '2xl:grid-cols-12',
+    1: 'er-2xl:grid-cols-1',
+    2: 'er-2xl:grid-cols-2',
+    3: 'er-2xl:grid-cols-3',
+    4: 'er-2xl:grid-cols-4',
+    6: 'er-2xl:grid-cols-6',
+    12: 'er-2xl:grid-cols-12',
   },
 };
 
-export const rtl = '[direction:rtl] children:[direction:ltr]';
+export const rtl = 'er-[direction:rtl] children:[direction:ltr]';
 
 export const gridGaps = {
-  default: 'grid-gap',
-  card: 'grid-gap gap-y-50 xl:gap-y-70',
-  split: 'md:gap-x-60 lg:gap-x-100 xl:gap-x-200 2xl:gap-x-280',
-  xs: 'gap-4',
-  'xs-horizontal': 'gap-x-4 gap-y-50 xl:gap-y-70',
+  default: 'er-grid-gap',
+  card: 'er-grid-gap er-gap-y-50 er-xl:gap-y-70',
+  split: 'er-md:gap-x-60 er-lg:gap-x-100 er-xl:gap-x-200 er-2xl:gap-x-280',
+  xs: 'er-gap-4',
+  'xs-horizontal': 'er-gap-x-4 er-gap-y-50 er-xl:gap-y-70',
 };
 
 export const gridJustifyContent = {
-  start: 'justify-start',
-  end: 'justify-end',
-  center: 'justify-center',
-  between: 'justify-between',
-  around: 'justify-around',
-  evenly: 'justify-evenly',
+  start: 'er-justify-start',
+  end: 'er-justify-end',
+  center: 'er-justify-center',
+  between: 'er-justify-between',
+  around: 'er-justify-around',
+  evenly: 'er-justify-evenly',
 };
 
 export const gridJustifyItems = {
-  start: 'justify-items-start',
-  end: 'justify-items-end',
-  center: 'justify-items-center',
-  stretch: 'justify-items-stretch',
+  start: 'er-justify-items-start',
+  end: 'er-justify-items-end',
+  center: 'er-justify-items-center',
+  stretch: 'er-justify-items-stretch',
 };
 
 export const gridAlignContent = {
-  start: 'content-start',
-  end: 'content-end',
-  center: 'content-center',
-  between: 'content-between',
-  around: 'content-around',
-  evenly: 'content-evenly',
+  start: 'er-content-start',
+  end: 'er-content-end',
+  center: 'er-content-center',
+  between: 'er-content-between',
+  around: 'er-content-around',
+  evenly: 'er-content-evenly',
 };
 
 export const gridAlignItems = {
-  start: 'items-start',
-  end: 'items-end',
-  center: 'items-center',
-  baseline: 'items-baseline',
-  stretch: 'items-stretch',
+  start: 'er-items-start',
+  end: 'er-items-end',
+  center: 'er-items-center',
+  baseline: 'er-items-baseline',
+  stretch: 'er-items-stretch',
 };
 
-// Styles for the alternating grid
-export const alternatingGridWrapper = 'relative mx-auto cc';
+export const alternatingGridWrapper = 'er-relative er-mx-auto er-cc';
 
-export const centerlineBg = 'hidden md:block w-2 absolute top-0 left-1/2 -ml-1 h-full origin-top bg-current bg-plum-light';
-export const centerline = 'hidden md:block w-2 absolute top-0 left-1/2 -ml-1 h-full origin-top bg-current bg-digital-red-light';
+export const centerlineBg = 'er-hidden er-md:block er-w-2 er-absolute er-top-0 er-left-1/2 er--ml-1 er-h-full er-origin-top er-bg-current er-bg-plum-light';
+export const centerline = 'er-hidden er-md:block er-w-2 er-absolute er-top-0 er-left-1/2 er--ml-1 er-h-full er-origin-top er-bg-current er-bg-digital-red-light';
 
-export const circleWrapper = 'hidden md:block relative top-0 left-1/2 -ml-1 origin-top';
-export const circle = 'fill-none stroke-2 stroke-black';
+export const circleWrapper = 'er-hidden er-md:block er-relative er-top-0 er-left-1/2 er--ml-1 er-origin-top';
+export const circle = 'er-fill-none er-stroke-2 er-stroke-black';
 
 export const gridWidths = {
-  full: 'w-full',
-  // This is for the overview text and theme cards in the alternating grid
-  inset: 'w-full 2xl:w-[95%] 3xl:w-[85%]',
+  full: 'er-w-full',
+  inset: 'er-w-full er-2xl:w-[95%] er-3xl:w-[85%]',
 };
 
-// Some sections have negative spacing between cards, i.e., the items are shifted upwards
 export const negativeSpacing = {
-  theme: 'md:-mb-140 lg:-mb-171',
+  theme: 'er-md:-mb-140 er-lg:-mb-171',
 };
 
-export const cellWithContent = 'last:!mb-0';
+export const cellWithContent = 'er-last:!mb-0';

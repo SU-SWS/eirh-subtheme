@@ -13,7 +13,7 @@ const CustomHits: React.FC<CustomHitsProps> = ({
   const { hits } = useHits(props);
 
   return (
-    <ul className='list-none p-0'>
+    <ul className='er-list-none er-p-0'>
       {hits.map((hit) => (
         <li key={hit.objectID}>
           <HitComponent hit={hit} />
