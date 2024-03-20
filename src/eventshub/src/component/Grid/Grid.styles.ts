@@ -49,7 +49,7 @@ export const gridNumCols = {
   },
 };
 
-export const rtl = 'er-[direction:rtl] children:[direction:ltr]';
+export const rtl = '[direction:rtl] er-children:[direction:ltr]';
 
 export const gridGaps = {
   default: 'er-grid-gap',
