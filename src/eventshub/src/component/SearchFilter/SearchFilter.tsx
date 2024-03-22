@@ -55,12 +55,12 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         aria-labelledby='accordion-button'
         hidden={!isOpen}
         role='region'
-        className={isOpen ? 'block' : 'hidden'}
+        className={isOpen ? 'er-block' : 'er-hidden'}
       >
         {filterOptions.map((filter) => (
           <label
             key={filter.event_feature}
-            className='flex items-center cursor-pointer text-19 hocus:underline'
+            className='er-flex er-items-center er-cursor-pointer er-text-19 hocus:er-underline'
           >
             <input
               type='checkbox'

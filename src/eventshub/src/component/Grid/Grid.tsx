@@ -62,7 +62,7 @@ export const Grid = ({
   <AsComponent
     {...props}
     className={cnb(
-      'grid',
+      'er-grid',
       gap ? styles.gridGaps[gap] : '',
       rtl ? styles.rtl : '',
       xs ? styles.gridNumCols.xs[xs] : '',
