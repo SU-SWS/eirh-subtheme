@@ -95,7 +95,7 @@ allpages:
 eventshub:
   version: VERSION
   css:
-    base:
+    theme:
       src/eventshub/dist/index.css: {}
   js:
     src/eventshub/dist/eventshub.js: {}

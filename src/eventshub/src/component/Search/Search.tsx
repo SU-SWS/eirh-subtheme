@@ -108,35 +108,35 @@ export const Search = () => {
     <div>
       <button
         className={cnb(
-          activeTab === 'venues' && 'border-b-3 border-digital-red',
-          'rs-mr-3 rs-pb-1 rs-mb-2 sans inline-block'
+          activeTab === 'venues' && 'er-border-b-3 er-border-digital-red',
+          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
         )}
         onClick={() => handleTabClick('venues')}
         aria-selected={activeTab === 'venues' ? 'true' : 'false'}
       >
-        <MapPinIcon className='w-1em inline-block mr-3' />
+        <MapPinIcon className='er-w-1em er-inline-block er-mr-3' />
         Venues
       </button>
       <button
         className={cnb(
-          activeTab === 'vendors' && 'border-b-3 border-digital-red',
-          'rs-mr-3 rs-pb-1 rs-mb-2 sans inline-block'
+          activeTab === 'vendors' && 'er-border-b-3 er-border-digital-red',
+          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
         )}
         onClick={() => handleTabClick('vendors')}
         aria-selected={activeTab === 'vendors' ? 'true' : 'false'}
       >
-        <UserIcon className='w-1em inline-block mr-3' />
+        <UserIcon className='er-w-1em er-inline-block er-mr-3' />
         Vendors
       </button>
       <button
         className={cnb(
-          activeTab === 'policies' && 'border-b-3 border-digital-red',
-          'rs-mr-3 rs-pb-1 rs-mb-2 sans inline-block'
+          activeTab === 'policies' && 'er-border-b-3 er-border-digital-red',
+          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
         )}
         onClick={() => handleTabClick('policies')}
         aria-selected={activeTab === 'policies' ? 'true' : 'false'}
       >
-        <ClipboardIcon className='w-1em inline-block mr-3' />
+        <ClipboardIcon className='er-w-1em er-inline-block er-mr-3' />
         Policies & Resources
       </button>
 
@@ -149,7 +149,7 @@ export const Search = () => {
         >
           <Configure hitsPerPage={25} filters={filterData} />
           <Grid gap='default' md={12}>
-            <FlexBox direction='col' className='col-span-3'>
+            <FlexBox direction='col' className='er-col-span-3'>
               <Autocomplete
                 searchClient={searchClient}
                 searchIndex={algoliaIndexName}
@@ -169,9 +169,9 @@ export const Search = () => {
                 );
               })}
             </FlexBox>
-            <FlexBox direction='col' className='col-span-9'>
+            <FlexBox direction='col' className='er-col-span-9'>
               <CustomHits hitComponent={SearchItemComponent} />
-              <Pagination className="children:list-none children:flex children:justify-center children:children:m-10" />
+              <Pagination className="children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10" />
             </FlexBox>
           </Grid>
         </InstantSearch>

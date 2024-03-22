@@ -29,10 +29,10 @@ export const FilterChips = () => {
       <div>
         {selectedFilters.map((filter, index) => (
           <button key={index} onClick={() => removeEventFilter(filter)}
-          className="inline-block group hover:underline focus-visible:underline transition text-16 pt-7 pb-8 px-18 font-regular rounded-full shadow hover:shadow-md focus:shadow active:shadow no-underline underline-offset-2 leading-display bg-white hocus:bg-digital-blue-20 text-digital-blue hocus:text-digital-blue-dark border-2 border-digital-blue focus:ring-2 active:ring-2 focus:ring-digital-blue-40 active:ring-digital-blue-40 outline-none hocus:decoration-digital-blue hocus:decoration-1"
+          className="er-inline-block er-group hover:er-underline focus-visible:er-underline er-transition er-text-16 er-pt-7 er-pb-8 er-px-18 er-font-regular er-rounded-full er-shadow hover:er-shadow-md focus:er-shadow active:er-shadow er-no-underline er-underline-offset-2 er-leading-display er-bg-white hocus:er-bg-digital-blue-20 er-text-digital-blue hocus:er-text-digital-blue-dark er-border-2 er-border-digital-blue focus:er-ring-2 active:er-ring-2 focus:er-ring-digital-blue-40 active:er-ring-digital-blue-40 er-outline-none hocus:er-decoration-digital-blue hocus:er-decoration-1"
           >
             {filter.event_feature}
-            <XMarkIcon className='w-1em inline-block ml-3' />
+            <XMarkIcon className='er-w-1em er-inline-block er-ml-3' />
           </button>
         ))}
       </div>
