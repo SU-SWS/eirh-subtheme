@@ -21,6 +21,8 @@ being effected by the theme styles, and from the tailwindcss styles negatively e
 in the *.libraries.yml file.
 2. Don't render the tailwindcss `@base` layer as that contains the CSS reset and there is already one in the sub-theme
 3. Add a prefix to the tailwind elements to avoid conflicting class names with the base theme
+4. Un-do Drupal theme layer styles in the React Application `index.css` file instead of the sub-theme scss files.
+5. Add the React application rendered CSS file to the sub-theme at the `theme` layer so it is low in the CSS cascade.
 
 ## Consequences
 
