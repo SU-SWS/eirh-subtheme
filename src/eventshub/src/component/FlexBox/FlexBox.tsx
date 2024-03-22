@@ -29,13 +29,13 @@ export const FlexBox = ({
   <AsComponent
     {...props}
     className={cnb(
-      'flex',
+      'er-flex',
       direction ? styles.flexDirection[direction] : '',
       wrap ? styles.flexWrap[wrap] : '',
       justifyContent ? styles.flexJustifyContent[justifyContent] : '',
       alignContent ? styles.flexAlignContent[alignContent] : '',
       alignItems ? styles.flexAlignItems[alignItems] : '',
-      gap ? 'grid-gap' : '',
+      gap ? 'er-grid-gap' : '',
       className,
     )}
   >

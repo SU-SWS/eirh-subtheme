@@ -1,4 +1,4 @@
-{{ attach_library('eirh-subtheme/eventshub') }}
+{{ attach_library('eirh_subtheme/eventshub') }}
 
 {# Create classes array. The 'node' class is required for contextual edit links. #}
 {% set node_classes = ['node'] %}
@@ -50,11 +50,11 @@
     <div{{ content_attributes.addClass('content') }}>
       {{ content|without('links') }}
 
-      <div class="jumpstart-ui--one-column centered-container">
-        <div class="main-region flex-12-of-12">
-          <div id="su-eventshub">Please view this page in another browser.</div>
-        </div>
+    <div class="jumpstart-ui--one-column centered-container">
+      <div class="main-region flex-12-of-12">
+        <div id="su-eventshub">Please view this page in another browser.</div>
       </div>
+    </div>
 
     </div><!-- /.content -->
 

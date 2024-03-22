@@ -34,16 +34,16 @@ const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
   const venueImage = hit.image && hit.image.length > 0 ? hit.image[0].url : 'https://images.unsplash.com/photo-1508302882073-8af6be4c6688?q=80&w=2971&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   return (
     <Grid as='article' md={12} gap='default'>
-        <div className='col-span-2'>
-          <div className='aspect-w-1 aspect-h-1 relative overflow-hidden'>
+        <div className='er-col-span-2'>
+          <div className='er-aspect-w-1 er-aspect-h-1 er-relative er-overflow-hidden'>
             <img
-              className='absolute h-full w-full object-cover'
+              className='er-absolute er-h-full er-w-full er-object-cover'
               src={venueImage}
               alt={hit.venue_name}
             />
           </div>
         </div>
-      <FlexBox direction='col' className='col-span-9'>
+      <FlexBox direction='col' className='er-col-span-9'>
         {hit.venue_name && <Heading as='h3'>{hit.venue_name}</Heading>}
         {hit.type_of_space_or_venue && (
           <TypeList items={hit.type_of_space_or_venue} />
