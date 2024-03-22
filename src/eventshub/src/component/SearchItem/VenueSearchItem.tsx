@@ -24,11 +24,11 @@ interface AirtableImageData {
 type VenueSearchItemProps = {
   hit: AlgoliaHit<{
     image?: AirtableImageData[];
-    space_name: string;
+    space_name?: string;
     type_of_space_or_venue?: string[];
     short_description?: string;
     url_for_space_or_venue?: string;
-    venue_location: string;
+    venue_location?: string;
     max_capacity?: string;
     address?: string;
   }>;

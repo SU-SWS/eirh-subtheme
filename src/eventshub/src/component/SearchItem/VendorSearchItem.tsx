@@ -7,8 +7,8 @@ import { CheckIcon } from '@heroicons/react/16/solid';
 
 type VendorSearchItemProps = {
   hit: AlgoliaHit<{
-    name: string;
-    stanford_service_provider: string;
+    name?: string;
+    stanford_service_provider?: string;
     service_type?: string[];
     short_description?: string;
     current_stanford_supplier?: string;
