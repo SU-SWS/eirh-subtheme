@@ -5,8 +5,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
+    target: ['es2020'],
     rollupOptions: {
       output: {
+        format: 'cjs',
         entryFileNames: 'eventshub.js',
         chunkFileNames: 'eventshub-chunk.js',
         assetFileNames: '[name].[ext]',
