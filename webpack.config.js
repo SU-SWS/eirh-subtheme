@@ -1,11 +1,9 @@
 
 const path = require("path");
 const Webpack = require("webpack");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const FixStyleOnlyEntriesPlugin = require("webpack-fix-style-only-entries");
 const autoprefixer = require('autoprefixer')({ grid: true });
-const FileManagerPlugin = require('filemanager-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ignoreEmitPlugin = require('ignore-emit-webpack-plugin');
 
 const config = {
   isProd: process.env.NODE_ENV === "production",
@@ -33,62 +31,32 @@ var webpackConfig = {
       'fa-fonts': path.resolve('node_modules', '@fortawesome/fontawesome-free/webfonts')
     }
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+    }),
+    new Webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [
+          autoprefixer
+        ]
+      }
+    }),
+    new ignoreEmitPlugin(['ckeditor5.js', 'main.js'])
+  ],
   module: {
     rules: [
       {
-        test: /\.m?js$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        },
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.s[ac]ss$/i,
         use: [
-          config.isProd ? { loader: MiniCssExtractPlugin.loader } : 'style-loader',
-          {loader:'css-loader', options: {}},
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                sourceMap: true,
-                plugins: [autoprefixer],
-              },
-            }
-          },
-          {loader:'sass-loader', options: {}}
-        ]
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          'sass-loader',
+        ],
       },
-      {
-        test: /\.(png|jpg|gif|svg)$/i,
-        type: "asset"
-      }
-    ]
+    ],
   },
-  plugins: [
-    new FixStyleOnlyEntriesPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
-    new FileManagerPlugin({
-      events: {
-        onStart: {
-          delete: ["dist"]
-        }
-      }
-    }),
-  ],
-  optimization: {
-    minimizer: [
-      new OptimizeCSSAssetsPlugin(),
-    ]
-  }
 };
 
-if (config.hmrEnabled) {
-  webpackConfig.plugins.push(new Webpack.HotModuleReplacementPlugin());
-}
 module.exports = webpackConfig;

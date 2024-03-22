@@ -48,9 +48,9 @@ export const Text = ({
         color ? styles.textColors[color] : '',
         variant ? styles.textVariants[variant] : '',
         leading ? styles.fontLeadings[leading] : '',
-        italic ? 'italic' : '',
-        srOnly ? 'sr-only' : '',
-        uppercase ? 'uppercase' : '',
+        italic ? 'er-italic' : '',
+        srOnly ? 'er-sr-only' : '',
+        uppercase ? 'er-uppercase' : '',
         className,
       )
     }
