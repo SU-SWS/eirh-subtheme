@@ -7,7 +7,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        format: 'cjs',
         entryFileNames: 'eventshub.js',
         chunkFileNames: 'eventshub-chunk.js',
         assetFileNames: '[name].[ext]',
