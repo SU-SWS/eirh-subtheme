@@ -10,7 +10,6 @@ type VendorSearchItemProps = {
     name?: string;
     stanford_service_provider?: string;
     service_type?: string[];
-    short_description?: string;
     current_stanford_supplier?: string;
     supplier_summary?: string;
     business_address?: string;
@@ -39,7 +38,6 @@ const VendorSearchItem = ({ hit }: VendorSearchItemProps) => {
         </FlexBox>
       </FlexBox>
       {hit.service_type && <TypeList items={hit.service_type} />}
-      {hit.short_description && <Paragraph>{hit.short_description}</Paragraph>}
       {hit.current_stanford_supplier && (
         <Paragraph>
           Current Stanford Supplier:{' '}

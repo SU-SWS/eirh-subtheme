@@ -138,7 +138,7 @@ export const Search = () => {
           aria-selected={activeTab === 'policies' ? 'true' : 'false'}
         >
           <ClipboardIcon className='er-w-1em er-inline-block er-mr-3' />
-          Policies & Resources
+          Policies
         </button>
       </div>
 
