@@ -7,6 +7,7 @@ core_version_requirement: ^9 || ^10 || ^11
 base theme: stanford_basic
 libraries:
   - eirh_subtheme/allpages
+  - eirh_subtheme/eventshub
 
 regions:
   page_top: 'Page top'

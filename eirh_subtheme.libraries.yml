@@ -93,7 +93,7 @@ allpages:
       dist/css/main.css: { }
 
 eventshub:
-  version: 1.0.1
+  version: 1.0.2
   css:
     theme:
       src/eventshub/dist/index.css: {}
