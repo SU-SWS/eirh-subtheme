@@ -87,13 +87,13 @@
 #       css/pattern-library/theme/print.css: { media: print }
 
 allpages:
-  version: 1.0.0
+  version: 1.0.1
   css:
     theme:
       dist/css/main.css: { }
 
 eventshub:
-  version: 1.0.0
+  version: 1.0.1
   css:
     theme:
       src/eventshub/dist/index.css: {}
