@@ -16,6 +16,14 @@
   width: unset;
 }
 
+#su-eventshub a.ais-Pagination-link {
+  @apply er-text-digital-red er-no-underline er-px-10 er-pb-10;
+}
+
+#su-eventshub .ais-Pagination-item--selected .ais-Pagination-link {
+  @apply er-text-black er-border-b-3 er-border-black;
+}
+
 /* TW */
 @tailwind base;
 @tailwind components;
