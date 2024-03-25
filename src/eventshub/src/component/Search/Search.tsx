@@ -106,7 +106,7 @@ export const Search = () => {
 
   return (
     <div>
-      <div className="er-border-b er-rs-mb-2">
+      <div className='er-border-b er-rs-mb-2'>
         <button
           className={cnb(
             activeTab === 'venues' && 'er-border-b-3 er-border-digital-red',
@@ -172,7 +172,10 @@ export const Search = () => {
               })}
             </FlexBox>
             <FlexBox direction='col' className='er-col-span-9'>
-              <CustomHits hitComponent={SearchItemComponent} />
+              <CustomHits
+                hitComponent={SearchItemComponent}
+                noResultsMessage={`We're sorry, but no results were found matching your search criteria. Please try again with different keywords or filters.`}
+              />
               <Pagination className='children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10' />
             </FlexBox>
           </Grid>
