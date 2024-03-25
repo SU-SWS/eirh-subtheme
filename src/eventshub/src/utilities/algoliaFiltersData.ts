@@ -1,25 +1,8 @@
-import { SearchIndex } from 'algoliasearch';
-import searchClient from './algoliaConfig';
-
 export interface AlgoliaHit {
   objectID: string;
   name: string;
   description: string;
 }
-
-const index: SearchIndex = searchClient.initIndex(
-  'SERENE ALL - appEb3LGlZS9OfNrK - Relationships'
-);
-
-export const fetchAlgoliaData = async (): Promise<AlgoliaHit[]> => {
-  try {
-    const { hits } = await index.search<AlgoliaHit>('', { hitsPerPage: 1000 });
-    return hits;
-  } catch (error) {
-    console.error('Error fetching data from Algolia:', error);
-    return [];
-  }
-};
 
 export interface DataItem {
   event_feature: string;
@@ -70,10 +53,4 @@ export const restructureData = (data: DataItem[]): GroupedDataItem[] => {
       event_feature_group: eventFeatureGroup,
     };
   });
-};
-
-export const algoliaFilterData = async (): Promise<GroupedDataItem[]> => {
-  const algoliaData = await fetchAlgoliaData();
-  const filterData = restructureData(algoliaData as unknown as DataItem[]);
-  return filterData;
 };

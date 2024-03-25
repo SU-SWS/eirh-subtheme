@@ -1,94 +1,34 @@
-import { useSelector, useDispatch } from 'react-redux';
 import {
   MapPinIcon,
   UserIcon,
   ClipboardIcon,
 } from '@heroicons/react/24/outline';
 import { cnb } from 'cnbuilder';
-import { AppDispatch, RootState } from '../../redux/store';
-import {
-  selectActiveTab,
-  setActiveTab,
-} from '../../redux/slices/searchTypeSlice';
-import { useEffect, useState } from 'react';
-import { selectFilters } from '../../redux/slices/filtersSlice';
-import {
-  GroupedDataItem,
-  algoliaFilterData,
-} from '../../utilities/algoliaFiltersData';
-import { getFilterData } from '../../utilities/getFilterData';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import PolicySearchItem from '../SearchItem/PolicySearchItem';
 import { InstantSearch, Configure, Pagination } from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
-import searchClient from '../../utilities/algoliaConfig';
 import SearchFilter from '../SearchFilter/SearchFilter';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
 import CustomHits from '../CustomHits/CustomHits';
 import { FilterChips } from '../FilterChips/FilterChips';
+import { useAppDispatch } from '../../redux/store';
+import { useAppState, useFilters } from '../../hooks';
+import algoliaClient from "../../utilities/algoliaConfig";
 
-const algoliaIndexMap: Record<string, string> = {
-  venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
-  vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
-  policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
-};
-
-const algoliaFacetMap: Record<string, string> = {
-  venues: 'type_of_space_or_venue',
-  vendors: 'service_type',
-  policies: 'logistics_categories',
-};
-
+/**
+ * Search component.
+ */
 export const Search = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const activeTab = useSelector((state: RootState) => selectActiveTab(state));
+  const dispatch = useAppDispatch();
+  const { activeTab, setActiveTab, activeIndex } = useAppState();
+  const { filterData, selectedFilters } = useFilters();
 
   const handleTabClick = (tab: string) => {
     dispatch(setActiveTab(tab));
   };
-
-  const algoliaIndexName = algoliaIndexMap[activeTab];
-  const [algoliaData, setAlgoliaData] = useState<GroupedDataItem[]>([]);
-  const selectedFilters = useSelector(selectFilters);
-  const [filterData, setFilterData] = useState<string>('');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await algoliaFilterData();
-        console.log(data);
-        setAlgoliaData(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    console.log('RAW DATA:', selectedFilters);
-    if (selectedFilters.length === 0) {
-      setFilterData('');
-      return;
-    }
-
-    const data = getFilterData(selectedFilters, activeTab);
-    console.log('MODIFIED DATA:', data);
-    console.log(
-      'FILTERED DATA:',
-      `(${data
-        .map((filter) => `${algoliaFacetMap[activeTab]}:"${filter}"`)
-        .join(' OR ')})`
-    );
-    setFilterData(
-      `(${data
-        .map((filter) => `${algoliaFacetMap[activeTab]}:"${filter}"`)
-        .join(' OR ')})`
-    );
-  }, [selectedFilters, activeTab]);
 
   const getSearchItemComponent = () => {
     switch (activeTab) {
@@ -103,6 +43,9 @@ export const Search = () => {
     }
   };
   const SearchItemComponent = getSearchItemComponent();
+
+  const searchClient = algoliaClient;
+  searchClient.initIndex(activeIndex);
 
   return (
     <div>
@@ -144,22 +87,22 @@ export const Search = () => {
       <div>
         <InstantSearch
           searchClient={searchClient}
-          indexName={algoliaIndexName}
+          indexName={activeIndex}
           routing
         >
-          <Configure hitsPerPage={25} filters={filterData} />
+          {/* <Configure hitsPerPage={25} filters={selectedFilters} /> */}
           <Grid gap='default' md={12}>
             <FlexBox direction='col' className='er-col-span-3'>
               <Autocomplete
                 searchClient={searchClient}
-                searchIndex={algoliaIndexName}
+                searchIndex={activeIndex}
                 placeholder={`Search by ${activeTab}`}
-                filtersQuery={filterData}
+                // filtersQuery={filterData}
                 detachedMediaQuery='none'
                 openOnFocus
               />
               <FilterChips />
-              {algoliaData.map((category) => {
+              {filterData.map((category) => {
                 return (
                   <SearchFilter
                     key={category.feature_group}

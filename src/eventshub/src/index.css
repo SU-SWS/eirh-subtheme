@@ -1,7 +1,8 @@
 /* Override Drupal */
 #su-eventshub button {
   background: unset;
-  color: unset; }
+  color: unset;
+}
 
 #su-eventshub [type="checkbox"] {
   clip: unset;

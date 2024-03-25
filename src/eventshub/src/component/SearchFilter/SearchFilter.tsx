@@ -29,10 +29,8 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
 
   const handleFilterToggle = (filter: EventFeatureGroupItem) => {
     if (selectedFilters.some((f) => f.event_feature === filter.event_feature)) {
-      console.log('REMOVE FILTER');
       dispatch(removeFilter(filter));
     } else {
-      console.log('ADD FILTER');
       dispatch(addFilter(filter));
     }
   };
