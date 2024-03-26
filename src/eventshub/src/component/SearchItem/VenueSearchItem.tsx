@@ -24,6 +24,7 @@ interface AirtableImageData {
 type VenueSearchItemProps = {
   hit: AlgoliaHit<{
     image?: AirtableImageData[];
+    venue_name?: string;
     space_name?: string;
     type_of_space_or_venue?: string[];
     short_description?: string;
@@ -59,9 +60,16 @@ const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
       </div>
       <FlexBox direction='col' className='er-col-span-9 last:children:er-mb-0'>
         <FlexBox direction='row' justifyContent='between'>
-          <Heading as='h3' size={1} className='er-m-0'>
-            {hit.space_name}
-          </Heading>
+          {hit.space_name &&
+            <Heading as='h3' size={1} className='er-m-0'>
+              {hit.space_name}
+            </Heading>
+          }
+          {(hit.venue_name && hit.space_name !== hit.venue_name) &&
+            <Paragraph className='er-uppercase er-mt-[-1.25em] er-type-0 er-text-black-80'>
+              {hit.venue_name}
+            </Paragraph>
+          }
           <Paragraph size='base' className='er-m-0'>
             {hit.venue_location}
           </Paragraph>
