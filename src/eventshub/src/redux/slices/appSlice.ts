@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
  * ******************************************************************************************************
  */
 export interface AppState {
-  tab: string;
+  tab: 'venues' | 'vendors' | 'policies';
   index: typeof algoliaIndexMap[keyof typeof algoliaIndexMap];
   isLoading: boolean;
   isReady: boolean;

@@ -3,6 +3,14 @@ import { type EventFeatureGroupItem, type GroupedDataItem } from '../../utilitie
 
 interface FiltersState {
   data: GroupedDataItem[];
+  keys: {
+    [key: string]:
+    {
+      vendors: string[],
+      venues: string[],
+      policies: string[]
+    }
+  };
   isLoading: boolean;
   isReady: boolean;
   isError: boolean;
@@ -11,6 +19,7 @@ interface FiltersState {
 
 const initialState: FiltersState = {
   data: [],
+  keys: {},
   isLoading: false,
   isReady: false,
   isError: false,
@@ -22,7 +31,6 @@ const filtersSlice = createSlice({
   initialState,
   reducers: {
     addFilter: (state, action: PayloadAction<EventFeatureGroupItem>) => {
-      console.log('Payload: ', action.payload);
       state.selectedFilters.push(action.payload);
     },
     removeFilter: (state, action: PayloadAction<EventFeatureGroupItem>) => {
@@ -47,6 +55,19 @@ const filtersSlice = createSlice({
     },
     setData: (state, action: PayloadAction<GroupedDataItem[]>) => {
       state.data = action.payload;
+      // Loop through each item's event_feature_group and add the event_feature as the key to the keys object.
+      // and the venues, vendors, and policies as the values.
+      for (const item of action.payload) {
+        const filters = item.event_feature_group;
+        // for each filter, add the filter to the keys object.
+        for (const filter of filters) {
+          const key = filter.event_feature;
+          const vendors = filter.vendors;
+          const venues = filter.venues;
+          const policies = filter.policies;
+          state.keys[key] = { vendors, venues, policies };
+        }
+      }
     }
   },
 });

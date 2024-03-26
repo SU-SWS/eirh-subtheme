@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useAppDispatch } from '../../redux/store';
 import {
-  selectFilters,
   addFilter,
   removeFilter,
 } from '../../redux/slices/filtersSlice';
 import { Heading } from '../Typography';
 import { FlexBox } from '../FlexBox';
 import { EventFeatureGroupItem } from '../../utilities/algoliaFiltersData';
+import { useFilters } from '../../hooks';
+import { useInstantSearch } from 'react-instantsearch-core';
 
 interface SearchFilterProps {
   title: string;
@@ -19,15 +19,17 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   title,
   filterOptions,
 }) => {
+  const dispatch = useAppDispatch();
+  const { selectedFilters } = useFilters();
+  const { uiState, setUiState, renderState, setIndexUiState} = useInstantSearch();
+
+  console.log("Filter UI STEATE", uiState);
+
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(!isOpen);
 
-  const selectedFilters = useSelector((state: RootState) =>
-    selectFilters(state)
-  );
-  const dispatch = useDispatch();
-
   const handleFilterToggle = (filter: EventFeatureGroupItem) => {
+
     if (selectedFilters.some((f) => f.event_feature === filter.event_feature)) {
       dispatch(removeFilter(filter));
     } else {

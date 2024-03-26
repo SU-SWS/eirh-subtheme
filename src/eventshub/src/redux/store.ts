@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import filtersReducer from './slices/filtersSlice';
 import appReducer from './slices/appSlice';
-import searchReducer from './slices/searchSlice';
 import { useDispatch, useSelector } from 'react-redux'
 import type { TypedUseSelectorHook } from 'react-redux'
 
@@ -9,7 +8,6 @@ const store = configureStore({
   reducer: {
     app: appReducer,
     filters: filtersReducer,
-    search: searchReducer,
   },
 });
 

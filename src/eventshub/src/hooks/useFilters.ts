@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../redux/store";
 import algoliaClient from "../utilities/algoliaConfig";
 import { type AlgoliaHit, restructureData } from "../utilities/algoliaFiltersData";
 import { SearchIndex } from "algoliasearch";
+import { EventFeatureGroupItem } from "../utilities/algoliaFiltersData";
 
 /**
  * Types & Interfaces
@@ -19,30 +20,56 @@ export interface DataItem {
 
 export type FilterHitType = AlgoliaHit & DataItem;
 
+  // Get the filter data for the index.
+export const algoliaFacetMap = {
+  venues: 'type_of_space_or_venue',
+  vendors: 'service_type',
+  policies: 'logistics_categories',
+} as const;
+
 /**
  * Hook
  * ******************************************************************************************
  */
 
 export default function useFilters() {
-  const { isReady, isLoading, isError, data } = useAppSelector((state) => state.filters);
+  const { isReady, isLoading, isError, data, selectedFilters } = useAppSelector((state) => state.filters);
   const dispatch = useAppDispatch();
   const indexName = 'SERENE ALL - appEb3LGlZS9OfNrK - Relationships';
 
-  // const algoliaFacetMap = {
-  //   venues: 'type_of_space_or_venue',
-  //   vendors: 'service_type',
-  //   policies: 'logistics_categories',
-  // } as const;
+  // Get the filter name for the index.
+  const getIndexFilterName = (index: 'venues' | 'vendors' | 'policies') => {
+    return algoliaFacetMap[index];
+  }
 
+  // Normalize the selected filters for Algolia.
+  const normailzeSelectedFiltersForAlgolia = (filters: EventFeatureGroupItem[], activeTab: keyof typeof algoliaFacetMap) => {
+    const normal:string[] = [];
+    const attribute = getIndexFilterName(activeTab);
+    for (const filter of filters) {
+      const filterSet = filter[activeTab];
+      // for each filter set, add the filter to the normal array.
+      for (let filterItem of filterSet) {
+        // For the any/all filter, we need to use a wildcard.
+        if (filterItem === 'Any/All') { filterItem = '*'; }
+        if (!normal.includes(`${attribute}:${filterItem}`)) {
+          // Add the the array.
+          normal.push(`${attribute}:${filterItem}`);
+        }
+      }
+    }
+    return normal;
+  }
+
+  /**
+   * Get the filter data from the index first.
+   */
   useEffect(() => {
     // Load only once..
     if (isReady || isError || isLoading) {
       return;
     }
-    console.log('Fetching filters data...');
     const fetchData = async () => {
-      // Wait 5 seconds
       dispatch({ type: 'filters/setIsLoading', payload: true });
       try {
         const index:SearchIndex = await algoliaClient.initIndex(indexName);
@@ -61,9 +88,12 @@ export default function useFilters() {
     }
 
     fetchData();
-  }, [isError, isLoading, isReady, dispatch, algoliaClient]);
+  }, [isError, isLoading, isReady, dispatch]);
 
   return {
+    normailzeSelectedFiltersForAlgolia,
+    getIndexFilterName,
+    selectedFilters,
     filterData: data,
     isReady,
     isLoading,

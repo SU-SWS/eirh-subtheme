@@ -17,7 +17,7 @@ type AutocompleteProps = Partial<AutocompleteOptions<BaseItem>> & {
   searchClient: SearchClient;
   className?: string;
   searchIndex: string;
-  filtersQuery?: string;
+  filtersQuery?: string[][];
 };
 
 type SetInstantSearchUiStateOptions = {
@@ -40,7 +40,7 @@ export function Autocomplete({
 
   const [instantSearchUiState, setInstantSearchUiState] =
     useState<SetInstantSearchUiStateOptions>({ query });
-  
+
   useEffect(() => {
     setQuery(instantSearchUiState.query);
     setPage(0);
@@ -65,7 +65,7 @@ export function Autocomplete({
                     indexName: searchIndex,
                     query,
                     params: {
-                      filters: filtersQuery,
+                      facetFilters: filtersQuery,
                     }
                   },
                 ],

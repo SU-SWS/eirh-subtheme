@@ -17,6 +17,7 @@ import { FilterChips } from '../FilterChips/FilterChips';
 import { useAppDispatch } from '../../redux/store';
 import { useAppState, useFilters } from '../../hooks';
 import algoliaClient from "../../utilities/algoliaConfig";
+import LoadingIndicator from './LoadingIndicator';
 
 /**
  * Search component.
@@ -24,7 +25,16 @@ import algoliaClient from "../../utilities/algoliaConfig";
 export const Search = () => {
   const dispatch = useAppDispatch();
   const { activeTab, setActiveTab, activeIndex } = useAppState();
-  const { filterData, selectedFilters } = useFilters();
+  const searchClient = algoliaClient;
+  searchClient.initIndex(activeIndex);
+
+  const {
+    filterData,
+    selectedFilters,
+    normailzeSelectedFiltersForAlgolia,
+    getIndexFilterName,
+  } = useFilters();
+
 
   const handleTabClick = (tab: string) => {
     dispatch(setActiveTab(tab));
@@ -43,9 +53,6 @@ export const Search = () => {
     }
   };
   const SearchItemComponent = getSearchItemComponent();
-
-  const searchClient = algoliaClient;
-  searchClient.initIndex(activeIndex);
 
   return (
     <div>
@@ -89,15 +96,24 @@ export const Search = () => {
           searchClient={searchClient}
           indexName={activeIndex}
           routing
+          future={{
+            preserveSharedStateOnUnmount: true,
+            persistHierarchicalRootCount: true,
+          }}
+          insights
         >
-          {/* <Configure hitsPerPage={25} filters={selectedFilters} /> */}
+          <Configure
+            hitsPerPage={25}
+            facetFilters={[normailzeSelectedFiltersForAlgolia(selectedFilters, activeTab)]}
+            facets={[getIndexFilterName(activeTab)]}
+          />
           <Grid gap='default' md={12}>
             <FlexBox direction='col' className='er-col-span-3'>
               <Autocomplete
                 searchClient={searchClient}
                 searchIndex={activeIndex}
                 placeholder={`Search by ${activeTab}`}
-                // filtersQuery={filterData}
+                filtersQuery={[normailzeSelectedFiltersForAlgolia(selectedFilters, activeTab)]}
                 detachedMediaQuery='none'
                 openOnFocus
               />
@@ -113,6 +129,7 @@ export const Search = () => {
               })}
             </FlexBox>
             <FlexBox direction='col' className='er-col-span-9'>
+              <LoadingIndicator />
               <CustomHits hitComponent={SearchItemComponent} />
               <Pagination className="children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10" />
             </FlexBox>

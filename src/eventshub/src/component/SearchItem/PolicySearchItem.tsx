@@ -12,8 +12,10 @@ type PolicySearchItemProps = {
 };
 
 const PolicySearchItem = ({ hit }: PolicySearchItemProps) => {
+  console.log(hit);
   return (
     <article>
+      policy
       {hit.policy_name && <Heading as='h3'>{hit.policy_name}</Heading>}
       {hit.logistics_categories && (
         <TypeList items={hit.logistics_categories} />

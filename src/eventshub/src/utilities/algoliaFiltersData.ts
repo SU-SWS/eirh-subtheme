@@ -27,10 +27,19 @@ export interface GroupedDataItem {
 }
 
 export const restructureData = (data: DataItem[]): GroupedDataItem[] => {
-  const uniqueFeatureGroups: string[] = Array.from(
+  let uniqueFeatureGroups: string[] = Array.from(
     new Set(data.map((item) => item.feature_group))
   );
 
+  // Remove the All group
+  const index = uniqueFeatureGroups.indexOf('All');
+  if (index > -1) {
+    uniqueFeatureGroups.splice(index, 1);
+  }
+  // Remove any undefined values from the array
+  uniqueFeatureGroups = uniqueFeatureGroups.filter((group) => group !== undefined);
+
+  // Loop through each of the groups and build the data structure
   return uniqueFeatureGroups.map((group) => {
     const itemsInGroup: DataItem[] = data.filter(
       (item) => item.feature_group === group
