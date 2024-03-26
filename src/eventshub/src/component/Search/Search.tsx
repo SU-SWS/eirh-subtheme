@@ -28,6 +28,7 @@ import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
 import CustomHits from '../CustomHits/CustomHits';
 import { FilterChips } from '../FilterChips/FilterChips';
+import { history } from 'instantsearch.js/es/lib/routers';
 
 const algoliaIndexMap: Record<string, string> = {
   venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
@@ -58,7 +59,6 @@ export const Search = () => {
     const fetchData = async () => {
       try {
         const data = await algoliaFilterData();
-        console.log(data);
         setAlgoliaData(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -69,20 +69,12 @@ export const Search = () => {
   }, []);
 
   useEffect(() => {
-    console.log('RAW DATA:', selectedFilters);
     if (selectedFilters.length === 0) {
       setFilterData('');
       return;
     }
 
     const data = getFilterData(selectedFilters, activeTab);
-    console.log('MODIFIED DATA:', data);
-    console.log(
-      'FILTERED DATA:',
-      `(${data
-        .map((filter) => `${algoliaFacetMap[activeTab]}:"${filter}"`)
-        .join(' OR ')})`
-    );
     setFilterData(
       `(${data
         .map((filter) => `${algoliaFacetMap[activeTab]}:"${filter}"`)

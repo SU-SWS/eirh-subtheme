@@ -65,15 +65,15 @@ const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
               {hit.space_name}
             </Heading>
           }
-          {(hit.venue_name && hit.space_name !== hit.venue_name) &&
-            <Paragraph className='er-uppercase er-mt-[-1.25em] er-type-0 er-text-black-80'>
-              {hit.venue_name}
-            </Paragraph>
-          }
           <Paragraph size='base' className='er-m-0'>
             {hit.venue_location}
           </Paragraph>
         </FlexBox>
+        {(hit.venue_name && hit.space_name !== hit.venue_name) &&
+            <Paragraph className='er-uppercase er-type-0 er-text-black-80'>
+              {hit.venue_name}
+            </Paragraph>
+          }
         {hit.type_of_space_or_venue && (
           <TypeList items={hit.type_of_space_or_venue} />
         )}
