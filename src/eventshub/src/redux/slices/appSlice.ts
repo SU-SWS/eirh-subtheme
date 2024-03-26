@@ -18,7 +18,7 @@ export type tabType = keyof typeof algoliaIndexMap;
  * Vars and constants
  * ******************************************************************************************************
  */
-const algoliaIndexMap = {
+export const algoliaIndexMap = {
   venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
   vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
   policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',

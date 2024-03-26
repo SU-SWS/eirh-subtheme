@@ -8,7 +8,6 @@ import { Heading } from '../Typography';
 import { FlexBox } from '../FlexBox';
 import { EventFeatureGroupItem } from '../../utilities/algoliaFiltersData';
 import { useFilters } from '../../hooks';
-import { useInstantSearch } from 'react-instantsearch-core';
 
 interface SearchFilterProps {
   title: string;
@@ -21,10 +20,6 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { selectedFilters } = useFilters();
-  const { uiState, setUiState, renderState, setIndexUiState} = useInstantSearch();
-
-  console.log("Filter UI STEATE", uiState);
-
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(!isOpen);
 

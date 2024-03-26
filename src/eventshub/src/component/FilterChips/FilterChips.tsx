@@ -8,6 +8,7 @@ import {
 import { AppDispatch, RootState } from '../../redux/store';
 import { EventFeatureGroupItem } from '../../utilities/algoliaFiltersData';
 import { XMarkIcon} from '@heroicons/react/16/solid'
+import { ClearRefinements } from 'react-instantsearch';
 
 export const FilterChips = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -38,6 +39,7 @@ export const FilterChips = () => {
       </div>
       <div>
         <button onClick={clearEventFilters}>Clear all filters</button>
+        <ClearRefinements />
       </div>
     </div>
   );

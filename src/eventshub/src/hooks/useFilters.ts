@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../redux/store";
-import algoliaClient from "../utilities/algoliaConfig";
+import algoliaClient from "../utilities/algoliaClient";
 import { type AlgoliaHit, restructureData } from "../utilities/algoliaFiltersData";
-import { SearchIndex } from "algoliasearch";
+import { SearchIndex } from "algoliasearch/lite";
 import { EventFeatureGroupItem } from "../utilities/algoliaFiltersData";
 
 /**
@@ -48,10 +48,11 @@ export default function useFilters() {
     const attribute = getIndexFilterName(activeTab);
     for (const filter of filters) {
       const filterSet = filter[activeTab];
+      if (!filterSet) { continue; }
       // for each filter set, add the filter to the normal array.
       for (let filterItem of filterSet) {
         // For the any/all filter, we need to use a wildcard.
-        if (filterItem === 'Any/All') { filterItem = '*'; }
+        if (filterItem === 'Any/All') { filterItem = '-Any/All'; }
         if (!normal.includes(`${attribute}:${filterItem}`)) {
           // Add the the array.
           normal.push(`${attribute}:${filterItem}`);
