@@ -30,5 +30,6 @@ function eirh_subtheme_page_attachments_alter(&$page) {
   if($alias == '/resources') {
     $page['#attached']['library'][] = 'eirh_subtheme/eventshub';
   }
-  var_dump($page);
+  var_dump($path);
+  var_dump($alias);
 }
