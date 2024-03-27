@@ -38,7 +38,7 @@ export function Autocomplete({
 
   const [instantSearchUiState, setInstantSearchUiState] =
     useState<SetInstantSearchUiStateOptions>({ query });
-  
+
   useEffect(() => {
     setQuery(instantSearchUiState.query);
     setPage(0);
