@@ -201,7 +201,7 @@ export const Search = () => {
           insights
         >
           <Configure
-            hitsPerPage={12}
+            hitsPerPage={25}
             analytics={true}
             />
           <Middleware />

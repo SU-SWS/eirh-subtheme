@@ -11,11 +11,10 @@ import type { Root } from 'react-dom/client';
 import { createRoot } from 'react-dom/client';
 
 // TODO: Determine if we should build upon or remove algolia styles
-import '@algolia/autocomplete-theme-classic';
+// import '@algolia/autocomplete-theme-classic';
 
 type AutocompleteProps = Partial<AutocompleteOptions<BaseItem>> & {
   searchClient: SearchClient;
-  className?: string;
   searchIndex: string;
   filtersQuery?: string;
 };
@@ -26,7 +25,6 @@ type SetInstantSearchUiStateOptions = {
 
 export function Autocomplete({
   searchClient,
-  className,
   searchIndex,
   filtersQuery,
   ...autocompleteProps
@@ -130,5 +128,5 @@ export function Autocomplete({
     return () => autocompleteInstance.destroy();
   }, [autocompleteProps, filtersQuery, searchClient, searchIndex]);
 
-  return <div className={className} ref={autocompleteContainer} />;
+  return <div className="er-mb-36" ref={autocompleteContainer} />;
 }

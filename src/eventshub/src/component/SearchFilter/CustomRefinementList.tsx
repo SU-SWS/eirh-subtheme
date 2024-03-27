@@ -23,10 +23,6 @@ const CustomRefinementList = ({ attribute, title, options }:CustomRefinementList
   const { selectedFilters } = useFilters();
 
   const handleRefine = (key:string) => {
-    // values.forEach((value) => {
-    //   const ref = (value === 'Any/All') ? '-Any/All' : value;
-    //   refine(ref);
-    // });
     dispatch({type: 'filters/toggleFilter', payload: key});
   }
 
