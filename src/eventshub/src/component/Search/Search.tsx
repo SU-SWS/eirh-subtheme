@@ -19,8 +19,9 @@ import algoliaClient from "../../utilities/algoliaClient";
 import LoadingIndicator from './LoadingIndicator';
 import { useEffect, useRef } from 'react';
 import CustomRefinementList from '../SearchFilter/CustomRefinementList';
-// import { history } from 'instantsearch.js/es/lib/routers';
+import { history } from 'instantsearch.js/es/lib/routers';
 import Middleware from './Middleware';
+import type { UiState } from 'instantsearch.js';
 
 /**
  * Search component.
@@ -84,71 +85,72 @@ export const Search = () => {
   const facetAttribute = getIndexFilterName(activeTab);
 
   // Routing object to handle router URLs.
-  // const routing = {
-  //   router: history(),
-  //   stateMapping: {
-  //     stateToRoute(uiState) {
-  //       const { selectedFilters } = filtersStoreRef.current;
-  //       const { tab, index } = appStoreRef.current;
-  //       const indexUiState = uiState[index];
-  //       const filters = selectedFilters.map((filter) => {
-  //         return filter.event_feature;
-  //       });
-  //       return {
-  //         // Search box.
-  //         q: indexUiState?.query,
-  //         // Filter facets
-  //         filters,
-  //         // Pager.
-  //         page: indexUiState?.page,
-  //         // Active tab.
-  //         tab: tab,
-  //         // Sort order.
-  //         // sort: TBD
-  //       };
-  //     },
-  //     routeToState(routeState) {
-  //       const { tab } = appStoreRef.current;
-  //       const filters = filtersStoreRef.current;
-  //       const algoliaFacetMap = {
-  //         venues: 'type_of_space_or_venue',
-  //         vendors: 'service_type',
-  //         policies: 'logistics_categories',
-  //       } as const;
-  //       const algoliaIndexMap = {
-  //         venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
-  //         vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
-  //         policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
-  //       } as const;
-  //       const activeTab = routeState.tab || tab;
-  //       const activeIndex = algoliaIndexMap[activeTab];
-  //       const field = algoliaFacetMap[activeTab];
-  //       const expandedFilters:string[] = [];
-  //       if (routeState.filters) {
-  //         routeState.filters.forEach((filter) => {
-  //           dispatch({type: 'filters/addFilter', payload: { [activeTab]: filters.keys[filter][activeTab], event_feature: filter }});
-  //           filters.keys[filter][activeTab].forEach((item) => {
-  //             expandedFilters.push(item);
-  //           });
-  //         })
-  //       }
+  const routing = {
+    router: history(),
+    stateMapping: {
+      stateToRoute(uiState:UiState) {
+        console.log('uiState:', uiState);
+        const { selectedFilters } = filtersStoreRef.current;
+        const { tab, index } = appStoreRef.current;
+        const indexUiState = uiState[index];
+        console.log('Active Index:', index);
+        console.log('Active Tab:', tab);
+        return {
+          // Search box.
+          q: indexUiState?.query,
+          // Filter facets
+          filters: selectedFilters,
+          // Pager.
+          page: indexUiState?.page,
+          // Active tab.
+          tab: tab,
+          // Sort order.
+          // sort: TBD
+        };
+      },
+      routeToState(routeState) {
+        // const { tab } = appStoreRef.current;
+        // const filters = filtersStoreRef.current;
+        // const algoliaFacetMap = {
+        //   venues: 'type_of_space_or_venue',
+        //   vendors: 'service_type',
+        //   policies: 'logistics_categories',
+        // } as const;
+        // const algoliaIndexMap = {
+        //   venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
+        //   vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
+        //   policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
+        // } as const;
+        // const activeTab = routeState.tab || tab;
+        // const activeIndex = algoliaIndexMap[activeTab];
+        // const field = algoliaFacetMap[activeTab];
+        // const expandedFilters:string[] = [];
+        // if (routeState.filters) {
+        //   routeState.filters.forEach((filter) => {
+        //     dispatch({type: 'filters/addFilter', payload: { [activeTab]: filters.keys[filter][activeTab], event_feature: filter }});
+        //     filters.keys[filter][activeTab].forEach((item) => {
+        //       expandedFilters.push(item);
+        //     });
+        //   })
+        // }
 
-  //       dispatch(setActiveTab(activeTab));
-  //       dispatch(setActiveIndex(activeIndex));
+        // dispatch(setActiveTab(activeTab));
+        // dispatch(setActiveIndex(activeIndex));
 
-  //       return {
-  //         [activeIndex]: {
-  //           query: routeState?.q,
-  //           refinementList: {
-  //             [field]: expandedFilters,
-  //           },
-  //           page: routeState?.page,
-  //           sort: routeState?.sort,
-  //         },
-  //       };
-  //     },
-  //   },
-  // };
+        // return {
+        //   [activeIndex]: {
+        //     query: routeState?.q,
+        //     refinementList: {
+        //       [field]: expandedFilters,
+        //     },
+        //     page: routeState?.page,
+        //     sort: routeState?.sort,
+        //   },
+        // };
+        return {}
+      },
+    },
+  };
 
   return (
     <div>
@@ -193,7 +195,7 @@ export const Search = () => {
         <InstantSearch
           searchClient={searchClient}
           indexName={activeIndex}
-          routing
+          routing={routing}
           future={{
             preserveSharedStateOnUnmount: false,
             persistHierarchicalRootCount: true,
