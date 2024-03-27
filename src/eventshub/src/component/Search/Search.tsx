@@ -106,39 +106,41 @@ export const Search = () => {
 
   return (
     <div>
-      <button
-        className={cnb(
-          activeTab === 'venues' && 'er-border-b-3 er-border-digital-red',
-          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
-        )}
-        onClick={() => handleTabClick('venues')}
-        aria-selected={activeTab === 'venues' ? 'true' : 'false'}
-      >
-        <MapPinIcon className='er-w-1em er-inline-block er-mr-3' />
-        Venues
-      </button>
-      <button
-        className={cnb(
-          activeTab === 'vendors' && 'er-border-b-3 er-border-digital-red',
-          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
-        )}
-        onClick={() => handleTabClick('vendors')}
-        aria-selected={activeTab === 'vendors' ? 'true' : 'false'}
-      >
-        <UserIcon className='er-w-1em er-inline-block er-mr-3' />
-        Vendors
-      </button>
-      <button
-        className={cnb(
-          activeTab === 'policies' && 'er-border-b-3 er-border-digital-red',
-          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
-        )}
-        onClick={() => handleTabClick('policies')}
-        aria-selected={activeTab === 'policies' ? 'true' : 'false'}
-      >
-        <ClipboardIcon className='er-w-1em er-inline-block er-mr-3' />
-        Policies & Resources
-      </button>
+      <div className='er-border-b er-rs-mb-2'>
+        <button
+          className={cnb(
+            activeTab === 'venues' && 'er-border-b-3 er-border-digital-red',
+            'er-rs-mr-2 er-pr-12 er-rs-pb-1 er-sans er-inline-block'
+          )}
+          onClick={() => handleTabClick('venues')}
+          aria-selected={activeTab === 'venues' ? 'true' : 'false'}
+        >
+          <MapPinIcon className='er-w-1em er-inline-block er-mr-3' />
+          Venues
+        </button>
+        <button
+          className={cnb(
+            activeTab === 'vendors' && 'er-border-b-3 er-border-digital-red',
+            'er-rs-mr-2 er-pr-12 er-rs-pb-1 er-sans er-inline-block'
+          )}
+          onClick={() => handleTabClick('vendors')}
+          aria-selected={activeTab === 'vendors' ? 'true' : 'false'}
+        >
+          <UserIcon className='er-w-1em er-inline-block er-mr-3' />
+          Vendors
+        </button>
+        <button
+          className={cnb(
+            activeTab === 'policies' && 'er-border-b-3 er-border-digital-red',
+            'er-rs-mr-2 er-pr-12 er-rs-pb-1 er-sans er-inline-block'
+          )}
+          onClick={() => handleTabClick('policies')}
+          aria-selected={activeTab === 'policies' ? 'true' : 'false'}
+        >
+          <ClipboardIcon className='er-w-1em er-inline-block er-mr-3' />
+          Policies
+        </button>
+      </div>
 
       {/* Search section */}
       <div>
@@ -170,8 +172,11 @@ export const Search = () => {
               })}
             </FlexBox>
             <FlexBox direction='col' className='er-col-span-9'>
-              <CustomHits hitComponent={SearchItemComponent} />
-              <Pagination className="children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10" />
+              <CustomHits
+                hitComponent={SearchItemComponent}
+                noResultsMessage={`We're sorry, but no results were found matching your search criteria. Please try again with different keywords or filters.`}
+              />
+              <Pagination className='children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10' />
             </FlexBox>
           </Grid>
         </InstantSearch>
