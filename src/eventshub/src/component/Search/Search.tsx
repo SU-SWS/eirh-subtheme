@@ -93,7 +93,6 @@ export const Search = () => {
     router: history(),
     stateMapping: {
       stateToRoute(uiState) {
-        console.log('UISTate', uiState)
         const { selectedFilters } = filtersStoreRef.current;
         const { tab, index } = appStoreRef.current;
         const indexUiState = uiState[index];
@@ -213,11 +212,10 @@ export const Search = () => {
             <FlexBox direction='col' className='er-col-span-3'>
               <Autocomplete
                 searchClient={searchClient}
-                searchIndex={activeIndex}
                 placeholder={`Search by ${activeTab}`}
-                filtersQuery={[normailzeSelectedFiltersForAlgolia(selectedFilters, activeTab)]}
                 detachedMediaQuery='none'
                 openOnFocus
+                debug={true}
               />
               <FilterChips />
               {filterData.map((filter) => (
