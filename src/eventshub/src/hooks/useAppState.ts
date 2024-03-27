@@ -1,29 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO: TYPE THE ANY.
 import { useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../redux/store';
 import { createAction } from '@reduxjs/toolkit';
-
-export interface UIState {
-  [key: string]: {
-    configure: {[key: string]: any};
-    page ?: number;
-    query ?: string;
-  }
-}
-
-export type StateToRouteResponse = {
-  q?: string;
-  page?: number;
-  food?: string[];
-}
-
-export interface RouteState {
-  [key: string]: {
-    page ?: number;
-    q ?: string;
-  }
-}
 
 export default function useAppState() {
   const { isLoading, isReady, isError, tab, index } = useAppSelector((state) => state.app);
@@ -41,7 +19,9 @@ export default function useAppState() {
     const fetchData = async () => {
       dispatch({ type: 'app/setIsLoading', payload: true });
       // Wait 1 seconds
+      // TODO: Wait for InstantSearch????
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
       dispatch({ type: 'app/setIsReady', payload: true});
       dispatch({ type: 'app/setIsLoading', payload: false });
 
@@ -52,9 +32,6 @@ export default function useAppState() {
   // ACTIONS
   const setActiveTab = createAction<string>('app/setTab');
   const setActiveIndex = createAction<string>('app/setIndex');
-
-  // FUNCTIONS
-
 
   // EXPORT(ISH)
   return {

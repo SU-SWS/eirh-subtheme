@@ -1,18 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { AppTabs } from '../../utilities/types';
 
 /**
  * Types and interfaces
  * ******************************************************************************************************
  */
 export interface AppState {
-  tab: 'venues' | 'vendors' | 'policies';
+  tab: AppTabs;
   index: typeof algoliaIndexMap[keyof typeof algoliaIndexMap];
   isLoading: boolean;
   isReady: boolean;
   isError: boolean;
 }
-
-export type tabType = keyof typeof algoliaIndexMap;
 
 /**
  * Vars and constants
@@ -22,6 +21,12 @@ export const algoliaIndexMap = {
   venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
   vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
   policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
+} as const;
+
+export const algoliaSuggestionsIndexMap = {
+  venues: 'venues_query_suggestions',
+  vendors: 'vendors_query_suggestions',
+  policies: 'policies_query_suggestions',
 } as const;
 
 const initialState: AppState = {
@@ -40,7 +45,7 @@ const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setTab : (state, action: PayloadAction<tabType>) => {
+    setTab : (state, action: PayloadAction<AppTabs>) => {
       state.tab = action.payload;
       state.index = algoliaIndexMap[action.payload];
     },

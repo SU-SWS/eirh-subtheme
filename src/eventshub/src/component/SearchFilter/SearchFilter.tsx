@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useAppDispatch } from '../../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../redux/store';
 import {
+  selectFilters,
   addFilter,
   removeFilter,
 } from '../../redux/slices/filtersSlice';
 import { Heading } from '../Typography';
 import { FlexBox } from '../FlexBox';
 import { EventFeatureGroupItem } from '../../utilities/algoliaFiltersData';
-import { useFilters } from '../../hooks';
 
 interface SearchFilterProps {
   title: string;
@@ -18,16 +19,20 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   title,
   filterOptions,
 }) => {
-  const dispatch = useAppDispatch();
-  const { selectedFilters } = useFilters();
   const [isOpen, setIsOpen] = useState(false);
   const handleOpen = () => setIsOpen(!isOpen);
 
-  const handleFilterToggle = (filter: EventFeatureGroupItem) => {
+  const selectedFilters = useSelector((state: RootState) =>
+    selectFilters(state)
+  );
+  const dispatch = useDispatch();
 
+  const handleFilterToggle = (filter: EventFeatureGroupItem) => {
     if (selectedFilters.some((f) => f.event_feature === filter.event_feature)) {
+      console.log('REMOVE FILTER');
       dispatch(removeFilter(filter));
     } else {
+      console.log('ADD FILTER');
       dispatch(addFilter(filter));
     }
   };
@@ -41,7 +46,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
           onClick={handleOpen}
           aria-controls='accordion-content'
         >
-          <Heading as='h4' size='base'>{title}</Heading>
+          <Heading as='h3'>{title}</Heading>
         </button>
       </div>
       <FlexBox
@@ -50,12 +55,12 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         aria-labelledby='accordion-button'
         hidden={!isOpen}
         role='region'
-        className={isOpen ? 'er-block' : 'er-hidden'}
+        className={isOpen ? 'block' : 'hidden'}
       >
         {filterOptions.map((filter) => (
           <label
             key={filter.event_feature}
-            className='er-flex er-items-center er-cursor-pointer er-text-19 hocus:er-underline'
+            className='flex items-center cursor-pointer text-19 hocus:underline'
           >
             <input
               type='checkbox'

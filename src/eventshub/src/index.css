@@ -4,17 +4,32 @@
   color: unset;
 }
 
-#su-eventshub [type="checkbox"] {
-  clip: unset;
-  border: unset;
-  -webkit-clip-path: unset;
-  clip-path: unset;
-  height: unset;
-  overflow: unset;
-  padding: unset;
-  position: unset;
-  white-space: unset;
-  width: unset;
+#su-eventshub a.ais-Pagination-link {
+  @apply er-text-digital-red er-no-underline er-px-10 er-pb-10;
+}
+
+#su-eventshub .ais-Pagination-item--selected .ais-Pagination-link {
+  @apply er-text-black er-border-b-3 er-border-black;
+}
+
+#su-eventshub .aa-Form {
+  @apply er-relative;
+}
+
+#su-eventshub .aa-InputWrapper input {
+  @apply er-w-full er-p-10 er-rounded-full er-text-21;
+}
+
+#su-eventshub .aa-InputWrapperPrefix .aa-Label {
+  @apply er-p-0 er-m-0 er-absolute er-right-5 er-top-5;
+}
+
+#su-eventshub .aa-InputWrapperPrefix .aa-Label button {
+  @apply er-bg-digital-red er-rounded-full er-w-36 er-h-36 er-flex er-justify-center er-items-center;
+}
+
+#su-eventshub .aa-InputWrapperPrefix .aa-Label .aa-SubmitIcon {
+  @apply er-text-white er-bg-digital-red er-rounded-full er-flex er-justify-center er-items-center;
 }
 
 /* TW */

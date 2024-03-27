@@ -1,2 +1,1 @@
-export * from './SearchFilter';
-export * from './CustomRefinementList';
+export * from './SearchFilter'

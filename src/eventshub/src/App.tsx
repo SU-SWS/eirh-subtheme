@@ -12,7 +12,11 @@ function App() {
 
   // If there was an error loading filters, show an error message.
   if (isErrorFilter || isError) {
-    return <div className='er-cc er-bg-digital-red'><Heading as='h1' className='er-text-white er-rs-p-8'>Error loading application</Heading></div>;
+    return (
+      <div className='er-cc er-bg-digital-red'>
+        <Heading as='h1' className='er-text-white er-rs-p-8'>Error loading application</Heading>
+      </div>
+    );
   }
 
   // If filters are not loaded, show a loading skeleton.

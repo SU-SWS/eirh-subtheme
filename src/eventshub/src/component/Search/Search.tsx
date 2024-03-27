@@ -19,15 +19,16 @@ import algoliaClient from "../../utilities/algoliaClient";
 import LoadingIndicator from './LoadingIndicator';
 import { useEffect, useRef } from 'react';
 import CustomRefinementList from '../SearchFilter/CustomRefinementList';
-import { history } from 'instantsearch.js/es/lib/routers';
-
+// import { history } from 'instantsearch.js/es/lib/routers';
+import Middleware from './Middleware';
 
 /**
  * Search component.
  */
 export const Search = () => {
   const dispatch = useAppDispatch();
-  const { activeTab, setActiveTab, setActiveIndex, activeIndex } = useAppState();
+  const { activeTab, setActiveTab, activeIndex } = useAppState();
+  const { groupedFilters, getIndexFilterName } = useFilters();
   const searchClient = algoliaClient;
 
   // ------------------------------------------------------------------------
@@ -57,13 +58,7 @@ export const Search = () => {
     swapIndex();
   }, [activeIndex, dispatch, searchClient]);
 
-  // Data...
-  const {
-    filterData,
-    selectedFilters,
-    normailzeSelectedFiltersForAlgolia,
-    getIndexFilterName,
-  } = useFilters();
+
 
   // Do stuff on tab click.
   const handleTabClick = (tab: string) => {
@@ -89,114 +84,116 @@ export const Search = () => {
   const facetAttribute = getIndexFilterName(activeTab);
 
   // Routing object to handle router URLs.
-  const routing = {
-    router: history(),
-    stateMapping: {
-      stateToRoute(uiState) {
-        const { selectedFilters } = filtersStoreRef.current;
-        const { tab, index } = appStoreRef.current;
-        const indexUiState = uiState[index];
-        const filters = selectedFilters.map((filter) => {
-          return filter.event_feature;
-        });
-        return {
-          // Search box.
-          q: indexUiState?.query,
-          // Filter facets
-          filters,
-          // Pager.
-          page: indexUiState?.page,
-          // Active tab.
-          tab: tab,
-          // Sort order.
-          // sort: TBD
-        };
-      },
-      routeToState(routeState) {
-        const { tab } = appStoreRef.current;
-        const filters = filtersStoreRef.current;
-        const algoliaFacetMap = {
-          venues: 'type_of_space_or_venue',
-          vendors: 'service_type',
-          policies: 'logistics_categories',
-        } as const;
-        const algoliaIndexMap = {
-          venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
-          vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
-          policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
-        } as const;
-        const activeTab = routeState.tab || tab;
-        const activeIndex = algoliaIndexMap[activeTab];
-        const field = algoliaFacetMap[activeTab];
-        const expandedFilters:string[] = [];
-        if (routeState.filters) {
-          routeState.filters.forEach((filter) => {
-            dispatch({type: 'filters/addFilter', payload: { [activeTab]: filters.keys[filter][activeTab], event_feature: filter }});
-            filters.keys[filter][activeTab].forEach((item) => {
-              expandedFilters.push(item);
-            });
-          })
-        }
+  // const routing = {
+  //   router: history(),
+  //   stateMapping: {
+  //     stateToRoute(uiState) {
+  //       const { selectedFilters } = filtersStoreRef.current;
+  //       const { tab, index } = appStoreRef.current;
+  //       const indexUiState = uiState[index];
+  //       const filters = selectedFilters.map((filter) => {
+  //         return filter.event_feature;
+  //       });
+  //       return {
+  //         // Search box.
+  //         q: indexUiState?.query,
+  //         // Filter facets
+  //         filters,
+  //         // Pager.
+  //         page: indexUiState?.page,
+  //         // Active tab.
+  //         tab: tab,
+  //         // Sort order.
+  //         // sort: TBD
+  //       };
+  //     },
+  //     routeToState(routeState) {
+  //       const { tab } = appStoreRef.current;
+  //       const filters = filtersStoreRef.current;
+  //       const algoliaFacetMap = {
+  //         venues: 'type_of_space_or_venue',
+  //         vendors: 'service_type',
+  //         policies: 'logistics_categories',
+  //       } as const;
+  //       const algoliaIndexMap = {
+  //         venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
+  //         vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
+  //         policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
+  //       } as const;
+  //       const activeTab = routeState.tab || tab;
+  //       const activeIndex = algoliaIndexMap[activeTab];
+  //       const field = algoliaFacetMap[activeTab];
+  //       const expandedFilters:string[] = [];
+  //       if (routeState.filters) {
+  //         routeState.filters.forEach((filter) => {
+  //           dispatch({type: 'filters/addFilter', payload: { [activeTab]: filters.keys[filter][activeTab], event_feature: filter }});
+  //           filters.keys[filter][activeTab].forEach((item) => {
+  //             expandedFilters.push(item);
+  //           });
+  //         })
+  //       }
 
-        dispatch(setActiveTab(activeTab));
-        dispatch(setActiveIndex(activeIndex));
+  //       dispatch(setActiveTab(activeTab));
+  //       dispatch(setActiveIndex(activeIndex));
 
-        return {
-          [activeIndex]: {
-            query: routeState?.q,
-            refinementList: {
-              [field]: expandedFilters,
-            },
-            page: routeState?.page,
-            sort: routeState?.sort,
-          },
-        };
-      },
-    },
-  };
+  //       return {
+  //         [activeIndex]: {
+  //           query: routeState?.q,
+  //           refinementList: {
+  //             [field]: expandedFilters,
+  //           },
+  //           page: routeState?.page,
+  //           sort: routeState?.sort,
+  //         },
+  //       };
+  //     },
+  //   },
+  // };
 
   return (
     <div>
-      <button
-        className={cnb(
-          activeTab === 'venues' && 'er-border-b-3 er-border-digital-red',
-          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
-        )}
-        onClick={() => handleTabClick('venues')}
-        aria-selected={activeTab === 'venues' ? 'true' : 'false'}
-      >
-        <MapPinIcon className='er-w-1em er-inline-block er-mr-3' />
-        Venues
-      </button>
-      <button
-        className={cnb(
-          activeTab === 'vendors' && 'er-border-b-3 er-border-digital-red',
-          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
-        )}
-        onClick={() => handleTabClick('vendors')}
-        aria-selected={activeTab === 'vendors' ? 'true' : 'false'}
-      >
-        <UserIcon className='er-w-1em er-inline-block er-mr-3' />
-        Vendors
-      </button>
-      <button
-        className={cnb(
-          activeTab === 'policies' && 'er-border-b-3 er-border-digital-red',
-          'er-rs-mr-3 er-rs-pb-1 er-rs-mb-2 er-sans er-inline-block'
-        )}
-        onClick={() => handleTabClick('policies')}
-        aria-selected={activeTab === 'policies' ? 'true' : 'false'}
-      >
-        <ClipboardIcon className='er-w-1em er-inline-block er-mr-3' />
-        Policies & Resources
-      </button>
+      <div className='er-border-b er-rs-mb-2'>
+        <button
+          className={cnb(
+            activeTab === 'venues' && 'er-border-b-3 er-border-digital-red',
+            'er-rs-mr-2 er-pr-12 er-rs-pb-1 er-sans er-inline-block'
+          )}
+          onClick={() => handleTabClick('venues')}
+          aria-selected={activeTab === 'venues' ? 'true' : 'false'}
+        >
+          <MapPinIcon className='er-w-1em er-inline-block er-mr-3' />
+          Venues
+        </button>
+        <button
+          className={cnb(
+            activeTab === 'vendors' && 'er-border-b-3 er-border-digital-red',
+            'er-rs-mr-2 er-pr-12 er-rs-pb-1 er-sans er-inline-block'
+          )}
+          onClick={() => handleTabClick('vendors')}
+          aria-selected={activeTab === 'vendors' ? 'true' : 'false'}
+        >
+          <UserIcon className='er-w-1em er-inline-block er-mr-3' />
+          Vendors
+        </button>
+        <button
+          className={cnb(
+            activeTab === 'policies' && 'er-border-b-3 er-border-digital-red',
+            'er-rs-mr-2 er-pr-12 er-rs-pb-1 er-sans er-inline-block'
+          )}
+          onClick={() => handleTabClick('policies')}
+          aria-selected={activeTab === 'policies' ? 'true' : 'false'}
+        >
+          <ClipboardIcon className='er-w-1em er-inline-block er-mr-3' />
+          Policies
+        </button>
+      </div>
 
       {/* Search section */}
       <div>
         <InstantSearch
           searchClient={searchClient}
           indexName={activeIndex}
-          routing={routing}
+          routing
           future={{
             preserveSharedStateOnUnmount: false,
             persistHierarchicalRootCount: true,
@@ -206,27 +203,39 @@ export const Search = () => {
           <Configure
             hitsPerPage={12}
             analytics={true}
-            facets={['*']}
             />
+          <Middleware />
           <Grid gap='default' md={12}>
             <FlexBox direction='col' className='er-col-span-3'>
               <Autocomplete
                 searchClient={searchClient}
+                searchIndex={activeIndex}
                 placeholder={`Search by ${activeTab}`}
                 detachedMediaQuery='none'
                 openOnFocus
                 debug={true}
               />
               <FilterChips />
-              {filterData.map((filter) => (
-                <CustomRefinementList key={filter.feature_group} title={filter.feature_group} attribute={facetAttribute} options={filter.event_feature_group} />
-              ))}
+              {// loop through grouped filters and render the custom refinement list.
+              Object.keys(groupedFilters).map((group) => {
+                return (
+                  <CustomRefinementList
+                    key={group}
+                    title={group}
+                    options={groupedFilters[group]}
+                    attribute={facetAttribute}
+                  />
+                );
+              })}
             </FlexBox>
             <FlexBox direction='col' className='er-col-span-9'>
-                <CurrentRefinements />
-                <LoadingIndicator />
-                <CustomHits hitComponent={SearchItemComponent} />
-                <Pagination className="children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10" />
+              <CurrentRefinements />
+              <LoadingIndicator />
+              <CustomHits
+                hitComponent={SearchItemComponent}
+                noResultsMessage={`We're sorry, but no results were found matching your search criteria. Please try again with different keywords or filters.`}
+              />
+              <Pagination className='children:er-list-none children:er-flex children:er-justify-center children:children:er-m-10' />
             </FlexBox>
           </Grid>
         </InstantSearch>
