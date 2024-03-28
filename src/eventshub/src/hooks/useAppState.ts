@@ -21,7 +21,14 @@ export default function useAppState() {
       // Wait 1 seconds
       // TODO: Wait for InstantSearch????
       await new Promise((resolve) => setTimeout(resolve, 1000));
-
+      // Get the URL search parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      // Get the tab
+      const tab = urlParams.get('tab');
+      // Set the tab
+      if (tab) {
+        dispatch({ type: 'app/setTab', payload: tab || 'venues' });
+      }
       dispatch({ type: 'app/setIsReady', payload: true});
       dispatch({ type: 'app/setIsLoading', payload: false });
 

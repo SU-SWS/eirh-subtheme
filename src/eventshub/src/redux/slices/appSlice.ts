@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppTabs } from '../../utilities/types';
+import { facetFieldNamesMap } from '../../hooks/useFilters';
 
 /**
  * Types and interfaces
@@ -8,6 +9,7 @@ import { AppTabs } from '../../utilities/types';
 export interface AppState {
   tab: AppTabs;
   index: typeof algoliaIndexMap[keyof typeof algoliaIndexMap];
+  field: string;
   isLoading: boolean;
   isReady: boolean;
   isError: boolean;
@@ -32,6 +34,7 @@ export const algoliaSuggestionsIndexMap = {
 const initialState: AppState = {
   tab: 'venues', // Default tab.
   index: algoliaIndexMap.venues,
+  field: facetFieldNamesMap.venues,
   isLoading: false,
   isReady: false,
   isError: false,
@@ -46,8 +49,10 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     setTab : (state, action: PayloadAction<AppTabs>) => {
+      console.log('setTab', action.payload);
       state.tab = action.payload;
       state.index = algoliaIndexMap[action.payload];
+      state.field = facetFieldNamesMap[action.payload];
     },
     setIndex: (state, action: PayloadAction<typeof algoliaIndexMap[keyof typeof algoliaIndexMap]>) => {
       state.index = action.payload;
