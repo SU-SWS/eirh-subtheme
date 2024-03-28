@@ -9,6 +9,7 @@ import { facetFieldNamesMap } from '../../hooks/useFilters';
 export interface AppState {
   tab: AppTabs;
   index: typeof algoliaIndexMap[keyof typeof algoliaIndexMap];
+  query: string;
   field: string;
   isLoading: boolean;
   isReady: boolean;
@@ -38,6 +39,7 @@ export const algoliaSuggestionsIndexMap = {
 const initialState: AppState = {
   tab: 'venues', // Default tab.
   index: algoliaIndexMap.venues,
+  query: new URLSearchParams(window.location.search).get('q') || '',
   field: facetFieldNamesMap.venues,
   isLoading: false,
   isReady: false,
@@ -57,6 +59,12 @@ const appSlice = createSlice({
       state.index = algoliaIndexMap[action.payload];
       state.field = facetFieldNamesMap[action.payload];
     },
+    setQuery: (state, action: PayloadAction<string>) => {
+      state.query = action.payload;
+    },
+    clearQuery: (state) => {
+      state.query = '';
+    },
     setIndex: (state, action: PayloadAction<typeof algoliaIndexMap[keyof typeof algoliaIndexMap]>) => {
       state.index = action.payload;
     },
@@ -72,6 +80,6 @@ const appSlice = createSlice({
   },
 });
 
-export const { setTab, setIsLoading, setIsError, setIsReady } = appSlice.actions;
+export const { setTab, setIsLoading, setIsError, setIsReady, setQuery, clearQuery } = appSlice.actions;
 export const selectAppData = (state: { app: AppState }) => state.app;
 export default appSlice.reducer;

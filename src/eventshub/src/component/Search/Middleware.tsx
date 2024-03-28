@@ -37,13 +37,16 @@ export default function Middleware() {
     addMiddlewares,
   } = useInstantSearch();
 
-  const { activeIndex, activeTab } = useAppState();
+  const { activeTab } = useAppState();
   const { filters, selectedFilters, getIndexFilterName } = useFilters();
   const field = getIndexFilterName(activeTab);
 
   /**
    * Whenever a filter is changed, update the UI state.
    * Whenever the active tab changes, update the UI state.
+   *
+   * NOTE: This side effect logic is also reproduced in the autocomplete component in order
+   * to determine which items are available to the autocomplete search.
    */
   useEffect(() => {
     const refineFilters:string[] = [];
@@ -58,7 +61,7 @@ export default function Middleware() {
     }
     setIndexUiState({ ...indexUiState, refinementList: { [field]: uniqueFilters }});
 
-  }, [selectedFilters, activeIndex, filters, setIndexUiState]);
+  }, [selectedFilters, filters, setIndexUiState, activeTab, field]);
 
 
   /**

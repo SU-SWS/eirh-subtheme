@@ -5,7 +5,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { tabs } from '../redux/slices/appSlice';
 
 export default function useAppState() {
-  const { isLoading, isReady, isError, tab, index } = useAppSelector((state) => state.app);
+  const { isLoading, isReady, isError, tab, index, query, field } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
 
   /**
@@ -40,6 +40,8 @@ export default function useAppState() {
   // ACTIONS
   const setActiveTab = createAction<string>('app/setTab');
   const setActiveIndex = createAction<string>('app/setIndex');
+  const setActiveQuery = createAction<string>('app/setQuery');
+  const clearActiveQuery = createAction('app/clearQuery');
 
   // EXPORT(ISH)
   return {
@@ -47,6 +49,10 @@ export default function useAppState() {
     setActiveIndex,
     activeTab: tab,
     activeIndex: index,
+    setActiveQuery,
+    clearActiveQuery,
+    activeQuery: query,
+    activeField: field,
     isLoading,
     isReady,
     isError

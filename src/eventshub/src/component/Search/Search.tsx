@@ -7,7 +7,7 @@ import { cnb } from 'cnbuilder';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import PolicySearchItem from '../SearchItem/PolicySearchItem';
-import { InstantSearch, Configure, Pagination, CurrentRefinements } from 'react-instantsearch';
+import { InstantSearch, Configure, Pagination } from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
@@ -30,6 +30,7 @@ export type RouteState = Partial<{
   page: number;
   sortBy: string;
 }>;
+
 
 /**
  * Search component.
@@ -202,7 +203,6 @@ export const Search = () => {
                 placeholder={`Search by ${activeTab}`}
                 detachedMediaQuery='none'
                 openOnFocus
-                debug={true}
               />
               <FilterChips />
               {// loop through grouped filters and render the custom refinement list.
@@ -218,7 +218,6 @@ export const Search = () => {
               })}
             </FlexBox>
             <FlexBox direction='col' className='er-col-span-9'>
-              <CurrentRefinements />
               <LoadingIndicator />
               <CustomHits
                 hitComponent={SearchItemComponent}
