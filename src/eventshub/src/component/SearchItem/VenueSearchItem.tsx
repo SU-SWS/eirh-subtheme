@@ -45,7 +45,7 @@ const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
   return (
     <Grid
       as='article'
-      md={12}
+      xs={12}
       gap='default'
       className='er-border-b er-rs-mt-2 er-rs-pb-1'
     >

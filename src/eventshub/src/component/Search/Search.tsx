@@ -193,18 +193,18 @@ export const Search = () => {
         >
           <Configure hitsPerPage={25} analytics={true} />
           <Middleware />
-          <Grid gap='default' md={12}>
+          <Grid gap='default' xs={12}>
             <MobileFilterMenu
               searchClient={algoliaClient}
               activeIndex={activeIndex}
               activeTab={activeTab}
               groupedFilters={groupedFilters}
               facetAttribute={facetAttribute}
-              className="md:er-hidden"
+              className="er-block md:er-hidden er-col-span-12"
             />
             <FlexBox
               direction='col'
-              className='er-hidden md:er-block md:er-col-span-3'
+              className='er-hidden md:er-block er-col-span-12 md:er-col-span-3'
             >
               <Autocomplete
                 searchClient={algoliaClient}
@@ -228,7 +228,7 @@ export const Search = () => {
                 })
               }
             </FlexBox>
-            <FlexBox direction='col' className='er-col-span-9'>
+            <FlexBox direction='col' className='er-col-span-12 md:er-col-span-9'>
               <LoadingIndicator />
               <CustomHits
                 hitComponent={SearchItemComponent}

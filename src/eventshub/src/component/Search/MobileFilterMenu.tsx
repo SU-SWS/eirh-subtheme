@@ -5,6 +5,7 @@ import CustomRefinementList from '../SearchFilter/CustomRefinementList';
 import { Heading } from '../Typography';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import type { SearchClient } from 'algoliasearch/lite';
+import { cnb } from 'cnbuilder'
 
 interface MobileFilterMenuProps {
   searchClient: SearchClient;
@@ -33,7 +34,7 @@ const MobileFilterMenu: React.FC<MobileFilterMenuProps> = ({
   const contentId = 'accordion-content';
 
   return (
-    <div className={className}>
+    <div className={cnb('er-w-full', className)}>
       {/* Accordion button */}
       <div>
         <button
