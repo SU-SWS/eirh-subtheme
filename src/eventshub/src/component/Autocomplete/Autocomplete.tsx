@@ -15,7 +15,7 @@ import { createRoot } from 'react-dom/client';
 import { AlgoliaVenueItem } from '../../utilities/types';
 
 // TODO: Determine if we should build upon or remove algolia styles
-// import '@algolia/autocomplete-theme-classic';
+import '@algolia/autocomplete-theme-classic';
 
 type AutocompleteProps = Partial<AutocompleteOptions<AlgoliaVenueItem>> & {
   searchClient: SearchClient;
