@@ -23,11 +23,11 @@ const VendorSearchItem = ({ hit }: VendorSearchItemProps) => {
   return (
     <article className='er-border-b er-rs-mt-2 er-rs-pb-1'>
       <FlexBox direction='row' justifyContent='between'>
-        <Heading as='h3' size={1} className='er-m-0'>
+        <Heading as='h3' className='er-m-0'>
           {hit.name}
         </Heading>
         <FlexBox direction='row' alignItems='center'>
-          <Paragraph size='base' className='er-mb-0 er-mr-10'>
+          <Paragraph  className='er-mb-0 er-mr-10'>
             Stanford Service Provider
           </Paragraph>
             {hit.stanford_service_provider ? (

@@ -27,7 +27,7 @@ export const FilterChips = () => {
 
   return (
     <div>
-      <Heading as='h4' size='base'>Filter By</Heading>
+      <Heading as='h5'>Filter By</Heading>
       <div>
         {selectedFilters.map((key) => (
           <button key={key} onClick={() => removeEventFilter(key)}

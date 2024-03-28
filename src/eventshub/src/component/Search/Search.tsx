@@ -7,7 +7,12 @@ import { cnb } from 'cnbuilder';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import PolicySearchItem from '../SearchItem/PolicySearchItem';
-import { InstantSearch, Configure, Pagination, CurrentRefinements } from 'react-instantsearch';
+import {
+  InstantSearch,
+  Configure,
+  Pagination,
+  CurrentRefinements,
+} from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
@@ -15,12 +20,13 @@ import CustomHits from '../CustomHits/CustomHits';
 import { FilterChips } from '../FilterChips/FilterChips';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { useAppState, useFilters } from '../../hooks';
-import algoliaClient from "../../utilities/algoliaClient";
+import algoliaClient from '../../utilities/algoliaClient';
 import LoadingIndicator from './LoadingIndicator';
 import { useEffect, useRef } from 'react';
 import CustomRefinementList from '../SearchFilter/CustomRefinementList';
 // import { history } from 'instantsearch.js/es/lib/routers';
 import Middleware from './Middleware';
+import MobileFilterMenu from './MobileFilterMenu';
 
 /**
  * Search component.
@@ -54,11 +60,9 @@ export const Search = () => {
   useEffect(() => {
     const swapIndex = async () => {
       await searchClient.initIndex(activeIndex);
-    }
+    };
     swapIndex();
   }, [activeIndex, dispatch, searchClient]);
-
-
 
   // Do stuff on tab click.
   const handleTabClick = (tab: string) => {
@@ -200,13 +204,21 @@ export const Search = () => {
           }}
           insights
         >
-          <Configure
-            hitsPerPage={25}
-            analytics={true}
-            />
+          <Configure hitsPerPage={25} analytics={true} />
           <Middleware />
           <Grid gap='default' md={12}>
-            <FlexBox direction='col' className='er-col-span-3'>
+            <MobileFilterMenu
+              searchClient={searchClient}
+              activeIndex={activeIndex}
+              activeTab={activeTab}
+              groupedFilters={groupedFilters}
+              facetAttribute={facetAttribute}
+              className="md:er-hidden"
+            />
+            <FlexBox
+              direction='col'
+              className='er-hidden md:er-block md:er-col-span-3'
+            >
               <Autocomplete
                 searchClient={searchClient}
                 searchIndex={activeIndex}
@@ -216,19 +228,21 @@ export const Search = () => {
                 debug={true}
               />
               <FilterChips />
-              {// loop through grouped filters and render the custom refinement list.
-              Object.keys(groupedFilters).map((group) => {
-                return (
-                  <CustomRefinementList
-                    key={group}
-                    title={group}
-                    options={groupedFilters[group]}
-                    attribute={facetAttribute}
-                  />
-                );
-              })}
+              {
+                // loop through grouped filters and render the custom refinement list.
+                Object.keys(groupedFilters).map((group) => {
+                  return (
+                    <CustomRefinementList
+                      key={group}
+                      title={group}
+                      options={groupedFilters[group]}
+                      attribute={facetAttribute}
+                    />
+                  );
+                })
+              }
             </FlexBox>
-            <FlexBox direction='col' className='er-col-span-9'>
+            <FlexBox direction='col' className='md:er-col-span-9'>
               <CurrentRefinements />
               <LoadingIndicator />
               <CustomHits

@@ -18,11 +18,11 @@ const PolicySearchItem = ({ hit }: PolicySearchItemProps) => {
     <article className='er-border-b er-rs-mt-2 er-rs-pb-1'>
       <FlexBox direction='row' justifyContent='between'>
         {hit.policy_name && (
-          <Heading as='h3' size={1} className='er-m-0'>
+          <Heading as='h3' className='er-m-0'>
             {hit.policy_name}
           </Heading>
         )}
-        <Paragraph size='base' className='er-m-0'>
+        <Paragraph  className='er-m-0'>
           {hit.type}
         </Paragraph>
       </FlexBox>
