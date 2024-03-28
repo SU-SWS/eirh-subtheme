@@ -67,7 +67,6 @@ const MobileFilterMenu: React.FC<MobileFilterMenuProps> = ({
           placeholder={`Search by ${activeTab}`}
           detachedMediaQuery='none'
           openOnFocus
-          debug={true}
         />
         <FilterChips />
         {

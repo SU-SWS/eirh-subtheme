@@ -7,12 +7,7 @@ import { cnb } from 'cnbuilder';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import PolicySearchItem from '../SearchItem/PolicySearchItem';
-import {
-  InstantSearch,
-  Configure,
-  Pagination,
-  CurrentRefinements,
-} from 'react-instantsearch';
+import { InstantSearch, Configure, Pagination } from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
@@ -24,9 +19,19 @@ import algoliaClient from '../../utilities/algoliaClient';
 import LoadingIndicator from './LoadingIndicator';
 import { useEffect, useRef } from 'react';
 import CustomRefinementList from '../SearchFilter/CustomRefinementList';
-// import { history } from 'instantsearch.js/es/lib/routers';
+import { history } from 'instantsearch.js/es/lib/routers';
 import Middleware from './Middleware';
+import type { UiState } from 'instantsearch.js';
 import MobileFilterMenu from './MobileFilterMenu';
+
+export type RouteState = Partial<{
+  tab: string;
+  filters: string[];
+  q: string;
+  page: number;
+  sortBy: string;
+}>;
+
 
 /**
  * Search component.
@@ -35,7 +40,6 @@ export const Search = () => {
   const dispatch = useAppDispatch();
   const { activeTab, setActiveTab, activeIndex } = useAppState();
   const { groupedFilters, getIndexFilterName } = useFilters();
-  const searchClient = algoliaClient;
 
   // ------------------------------------------------------------------------
   // WARNING: UGLY HACK.
@@ -59,10 +63,10 @@ export const Search = () => {
   // Change the index when the active index changes.
   useEffect(() => {
     const swapIndex = async () => {
-      await searchClient.initIndex(activeIndex);
-    };
+      await algoliaClient.initIndex(activeIndex);
+    }
     swapIndex();
-  }, [activeIndex, dispatch, searchClient]);
+  }, [activeIndex, dispatch]);
 
   // Do stuff on tab click.
   const handleTabClick = (tab: string) => {
@@ -88,71 +92,54 @@ export const Search = () => {
   const facetAttribute = getIndexFilterName(activeTab);
 
   // Routing object to handle router URLs.
-  // const routing = {
-  //   router: history(),
-  //   stateMapping: {
-  //     stateToRoute(uiState) {
-  //       const { selectedFilters } = filtersStoreRef.current;
-  //       const { tab, index } = appStoreRef.current;
-  //       const indexUiState = uiState[index];
-  //       const filters = selectedFilters.map((filter) => {
-  //         return filter.event_feature;
-  //       });
-  //       return {
-  //         // Search box.
-  //         q: indexUiState?.query,
-  //         // Filter facets
-  //         filters,
-  //         // Pager.
-  //         page: indexUiState?.page,
-  //         // Active tab.
-  //         tab: tab,
-  //         // Sort order.
-  //         // sort: TBD
-  //       };
-  //     },
-  //     routeToState(routeState) {
-  //       const { tab } = appStoreRef.current;
-  //       const filters = filtersStoreRef.current;
-  //       const algoliaFacetMap = {
-  //         venues: 'type_of_space_or_venue',
-  //         vendors: 'service_type',
-  //         policies: 'logistics_categories',
-  //       } as const;
-  //       const algoliaIndexMap = {
-  //         venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
-  //         vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
-  //         policies: 'SERENE ALL - appEb3LGlZS9OfNrK - Policies',
-  //       } as const;
-  //       const activeTab = routeState.tab || tab;
-  //       const activeIndex = algoliaIndexMap[activeTab];
-  //       const field = algoliaFacetMap[activeTab];
-  //       const expandedFilters:string[] = [];
-  //       if (routeState.filters) {
-  //         routeState.filters.forEach((filter) => {
-  //           dispatch({type: 'filters/addFilter', payload: { [activeTab]: filters.keys[filter][activeTab], event_feature: filter }});
-  //           filters.keys[filter][activeTab].forEach((item) => {
-  //             expandedFilters.push(item);
-  //           });
-  //         })
-  //       }
+  const routing = {
+    router: history(),
+    stateMapping: {
+      stateToRoute(uiState:UiState) {
+        // Get the first key of uiState
+        const indexUiState = uiState[Object.keys(uiState)[0]];
+        const { selectedFilters } = filtersStoreRef.current;
+        const { tab } = appStoreRef.current;
+        return {
+          // Search box.
+          q: indexUiState?.query,
+          // Filter facets
+          filters: selectedFilters,
+          // Pager.
+          page: indexUiState?.page,
+          // Active tab.
+          tab: tab,
+          // Sort order.
+          // sortBy: TBD
+        } as unknown as UiState;
+      },
+      routeToState(routeState:RouteState) {
+        const { index, field } = appStoreRef.current;
 
-  //       dispatch(setActiveTab(activeTab));
-  //       dispatch(setActiveIndex(activeIndex));
+        // Set the active tab.
+        if (routeState?.tab) {
+          dispatch(setActiveTab(activeTab));
+        }
 
-  //       return {
-  //         [activeIndex]: {
-  //           query: routeState?.q,
-  //           refinementList: {
-  //             [field]: expandedFilters,
-  //           },
-  //           page: routeState?.page,
-  //           sort: routeState?.sort,
-  //         },
-  //       };
-  //     },
-  //   },
-  // };
+        // Set the active filters.
+        if (routeState?.filters) {
+          dispatch({ type: 'filters/setFilters', payload: routeState.filters });
+        }
+
+        return {
+          [index]: {
+            query: routeState?.q,
+            refinementList: {
+              [field]: routeState?.filters,
+            },
+            page: routeState?.page ?? 1,
+            sortBy: routeState?.sortBy,
+          },
+        } as unknown as UiState;
+
+      },
+    },
+  };
 
   return (
     <div>
@@ -195,9 +182,9 @@ export const Search = () => {
       {/* Search section */}
       <div>
         <InstantSearch
-          searchClient={searchClient}
+          searchClient={algoliaClient}
           indexName={activeIndex}
-          routing
+          routing={routing}
           future={{
             preserveSharedStateOnUnmount: false,
             persistHierarchicalRootCount: true,
@@ -208,7 +195,7 @@ export const Search = () => {
           <Middleware />
           <Grid gap='default' md={12}>
             <MobileFilterMenu
-              searchClient={searchClient}
+              searchClient={algoliaClient}
               activeIndex={activeIndex}
               activeTab={activeTab}
               groupedFilters={groupedFilters}
@@ -220,12 +207,11 @@ export const Search = () => {
               className='er-hidden md:er-block md:er-col-span-3'
             >
               <Autocomplete
-                searchClient={searchClient}
+                searchClient={algoliaClient}
                 searchIndex={activeIndex}
                 placeholder={`Search by ${activeTab}`}
                 detachedMediaQuery='none'
                 openOnFocus
-                debug={true}
               />
               <FilterChips />
               {
@@ -242,8 +228,7 @@ export const Search = () => {
                 })
               }
             </FlexBox>
-            <FlexBox direction='col' className='md:er-col-span-9'>
-              <CurrentRefinements />
+            <FlexBox direction='col' className='er-col-span-9'>
               <LoadingIndicator />
               <CustomHits
                 hitComponent={SearchItemComponent}
