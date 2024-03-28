@@ -39,7 +39,7 @@ const CustomRefinementList = ({ attribute, title, options }:CustomRefinementList
           aria-controls={contentId}
           className='er-flex er-direction-row er-justify-between er-w-full'
         >
-          <Heading as='h4' size='base' className="er-m-0">
+          <Heading as='h5' className="er-m-0">
             {title}
           </Heading>
           <ChevronDownIcon

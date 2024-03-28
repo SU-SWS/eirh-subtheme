@@ -15,13 +15,14 @@ import CustomHits from '../CustomHits/CustomHits';
 import { FilterChips } from '../FilterChips/FilterChips';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { useAppState, useFilters } from '../../hooks';
-import algoliaClient from "../../utilities/algoliaClient";
+import algoliaClient from '../../utilities/algoliaClient';
 import LoadingIndicator from './LoadingIndicator';
 import { useEffect, useRef } from 'react';
 import CustomRefinementList from '../SearchFilter/CustomRefinementList';
 import { history } from 'instantsearch.js/es/lib/routers';
 import Middleware from './Middleware';
 import type { UiState } from 'instantsearch.js';
+import MobileFilterMenu from './MobileFilterMenu';
 
 export type RouteState = Partial<{
   tab: string;
@@ -190,13 +191,21 @@ export const Search = () => {
           }}
           insights
         >
-          <Configure
-            hitsPerPage={25}
-            analytics={true}
-            />
+          <Configure hitsPerPage={25} analytics={true} />
           <Middleware />
-          <Grid gap='default' md={12}>
-            <FlexBox direction='col' className='er-col-span-3'>
+          <Grid gap='default' xs={12}>
+            <MobileFilterMenu
+              searchClient={algoliaClient}
+              activeIndex={activeIndex}
+              activeTab={activeTab}
+              groupedFilters={groupedFilters}
+              facetAttribute={facetAttribute}
+              className="er-block md:er-hidden er-col-span-12"
+            />
+            <FlexBox
+              direction='col'
+              className='er-hidden md:er-block er-col-span-12 md:er-col-span-3'
+            >
               <Autocomplete
                 searchClient={algoliaClient}
                 searchIndex={activeIndex}
@@ -205,19 +214,21 @@ export const Search = () => {
                 openOnFocus
               />
               <FilterChips />
-              {// loop through grouped filters and render the custom refinement list.
-              Object.keys(groupedFilters).map((group) => {
-                return (
-                  <CustomRefinementList
-                    key={group}
-                    title={group}
-                    options={groupedFilters[group]}
-                    attribute={facetAttribute}
-                  />
-                );
-              })}
+              {
+                // loop through grouped filters and render the custom refinement list.
+                Object.keys(groupedFilters).map((group) => {
+                  return (
+                    <CustomRefinementList
+                      key={group}
+                      title={group}
+                      options={groupedFilters[group]}
+                      attribute={facetAttribute}
+                    />
+                  );
+                })
+              }
             </FlexBox>
-            <FlexBox direction='col' className='er-col-span-9'>
+            <FlexBox direction='col' className='er-col-span-12 md:er-col-span-9'>
               <LoadingIndicator />
               <CustomHits
                 hitComponent={SearchItemComponent}

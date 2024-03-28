@@ -1,12 +1,28 @@
-/* TW */
-/* @tailwind base; */
-@tailwind components;
-@tailwind utilities;
-
 /* Override Drupal */
+#su-eventshub *,
+#su-eventshub :before,
+#su-eventshub :after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
+
+#su-eventshub .er-border-2 {
+  border-width: 2px;
+}
+#su-eventshub .er-border-b {
+  border-bottom-width: 1px;
+}
+#su-eventshub .er-border-b-3 {
+  border-bottom-width: 3px;
+}
+
+
 #su-eventshub button {
   background: unset;
   color: unset;
+  padding: 0;
 }
 
 #su-eventshub [type='checkbox'] {
@@ -22,43 +38,6 @@
   width: unset;
 }
 
-#su-eventshub .aa-Form {
-  @apply er-relative;
-}
-
-#su-eventshub .aa-InputWrapper input {
-  @apply er-w-full er-p-10 er-rounded-full er-text-21;
-}
-
-#su-eventshub .aa-InputWrapperPrefix .aa-Label {
-  @apply er-p-0 er-m-0 er-absolute er-right-5 er-top-5;
-}
-
-#su-eventshub .aa-InputWrapperPrefix .aa-Label button {
-  @apply er-bg-digital-red er-rounded-full er-w-36 er-h-36 er-flex er-justify-center er-items-center;
-}
-
-#su-eventshub .aa-InputWrapperPrefix .aa-Label .aa-SubmitIcon {
-  @apply er-text-white er-bg-digital-red er-rounded-full er-flex er-justify-center er-items-center;
-}
-
-#su-eventshub a.ais-Pagination-link {
-  @apply er-text-digital-red er-no-underline er-px-10 er-pb-10;
-}
-
-#su-eventshub .ais-Pagination-item--selected .ais-Pagination-link {
-  @apply er-text-black er-border-b-3 er-border-black;
-}
-
-#su-eventshub .er-border-2 {
-  border-width: 2px;
-}
-#su-eventshub .er-border-b {
-  border-bottom-width: 1px;
-}
-#su-eventshub .er-border-b-3 {
-  border-bottom-width: 3px;
-}
 #su-eventshub .er-border-black-50 {
   --tw-border-opacity: 1;
   border-color: rgb(151 150 148 / var(--tw-border-opacity));
@@ -165,3 +144,42 @@
   border-color: transparent;
   background-color: currentColor;
 }
+
+
+
+#su-eventshub .aa-Form {
+  @apply er-relative;
+}
+
+#su-eventshub .aa-InputWrapper input {
+  @apply er-w-full er-m-0 er-py-24 er-px-26 er-rounded-full er-text-21 er-border er-z-10;
+}
+
+#su-eventshub .aa-InputWrapperSuffix { 
+  @apply er-absolute er-top-0 er-right-50 er-h-full er-items-center er-z-50;
+}
+
+#su-eventshub .aa-InputWrapperPrefix .aa-Label {
+  @apply er-p-0 er-m-0 er-absolute er-right-10 er-top-0 er-flex er-items-center er-z-50;
+}
+
+#su-eventshub .aa-InputWrapperPrefix .aa-Label button {
+  @apply er-bg-digital-red er-rounded-full er-w-36 er-h-36 er-flex er-justify-center er-items-center;
+}
+
+#su-eventshub .aa-InputWrapperPrefix .aa-Label .aa-SubmitIcon {
+  @apply er-text-white er-bg-digital-red er-rounded-full er-flex er-justify-center er-items-center;
+}
+
+#su-eventshub a.ais-Pagination-link {
+  @apply er-text-digital-red er-no-underline er-px-10 er-pb-10;
+}
+
+#su-eventshub .ais-Pagination-item--selected .ais-Pagination-link {
+  @apply er-text-black er-border-b-3 er-border-black;
+}
+
+/* TW */
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;

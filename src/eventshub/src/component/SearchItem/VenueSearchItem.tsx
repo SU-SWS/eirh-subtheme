@@ -45,11 +45,11 @@ const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
   return (
     <Grid
       as='article'
-      md={12}
+      xs={12}
       gap='default'
       className='er-border-b er-rs-mt-2 er-rs-pb-1'
     >
-      <div className='er-col-span-2'>
+      <div className='er-col-span-5 md:er-col-span-3'>
         <div className='er-aspect-w-1 er-aspect-h-1 er-relative er-overflow-hidden'>
           <img
             className='er-absolute er-h-full er-w-full er-object-cover'
@@ -58,12 +58,12 @@ const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
           />
         </div>
       </div>
-      <FlexBox direction='col' className='er-col-span-9 last:children:er-mb-0'>
+      <FlexBox direction='col' className='er-col-span-7 md:er-col-span-9 last:children:er-mb-0'>
         <FlexBox direction='row' justifyContent='between'>
-          <Heading as='h3' size={1} className='er-m-0'>
+          <Heading as='h3' className='er-m-0'>
             {hit.space_name}
           </Heading>
-          <Paragraph size='base' className='er-m-0'>
+          <Paragraph  className='er-m-0'>
             {hit.venue_location}
           </Paragraph>
         </FlexBox>
@@ -72,13 +72,13 @@ const VenueSearchItem = ({ hit }: VenueSearchItemProps) => {
           <TypeList items={hit.type_of_space_or_venue} />
         )}
         {hit.short_description && (
-          <Paragraph size='base'>{venueDescription}</Paragraph>
+          <Paragraph >{venueDescription}</Paragraph>
         )}
         {hit.max_capacity && (
-          <Paragraph size='base'>Max Capacity: {hit.max_capacity}</Paragraph>
+          <Paragraph >Max Capacity: {hit.max_capacity}</Paragraph>
         )}
 
-        {hit.address && <Paragraph size='base'>{hit.address}</Paragraph>}
+        {hit.address && <Paragraph >{hit.address}</Paragraph>}
         {hit.url_for_space_or_venue && (
           <Cta href={hit.url_for_space_or_venue} extIcon>
             Website
