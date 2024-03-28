@@ -7,8 +7,8 @@ import { cnb } from 'cnbuilder';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import PolicySearchItem from '../SearchItem/PolicySearchItem';
-import { InstantSearch, Configure, Pagination, CurrentRefinements, SearchBox } from 'react-instantsearch';
-// import { Autocomplete } from '../Autocomplete';
+import { InstantSearch, Configure, Pagination, CurrentRefinements } from 'react-instantsearch';
+import { Autocomplete } from '../Autocomplete';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
 import CustomHits from '../CustomHits/CustomHits';
@@ -196,15 +196,14 @@ export const Search = () => {
           <Middleware />
           <Grid gap='default' md={12}>
             <FlexBox direction='col' className='er-col-span-3'>
-              {/* <Autocomplete
-                searchClient={searchClient}
+              <Autocomplete
+                searchClient={algoliaClient}
                 searchIndex={activeIndex}
                 placeholder={`Search by ${activeTab}`}
                 detachedMediaQuery='none'
                 openOnFocus
                 debug={true}
-              /> */}
-              <SearchBox placeholder={`Search by ${activeTab}`} />
+              />
               <FilterChips />
               {// loop through grouped filters and render the custom refinement list.
               Object.keys(groupedFilters).map((group) => {
