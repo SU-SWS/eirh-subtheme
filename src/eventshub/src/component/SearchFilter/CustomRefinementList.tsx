@@ -57,7 +57,7 @@ const CustomRefinementList = ({ attribute, title, options }:CustomRefinementList
       >
         {options.map((item) => {
           const isRefined = selectedFilters.includes(item.name);
-          const itemCount = 0; // TODO: Get the count from the UIState.
+          // const itemCount = 0; // TODO: Get the count from the UIState.
           return (
             <label
               key={item.name}
@@ -70,7 +70,7 @@ const CustomRefinementList = ({ attribute, title, options }:CustomRefinementList
                 className='er-mr-10 er-block er-rounded er-border-2 er-border-black-50 focus:er-border-digital-blue checked:er-text-digital-blue checked:er-border-digital-blue-light checked:hover:er-text-digital-blue-dark checked:focus:er-text-digital-blue-dark checked:er-hover:er-border-digital-blue checked:focus:er-border-digital-blue group-hover:er-bg-transparent focus:er-bg-transparent outline-none focus-visible:er-outline-none outline-none focus:er-ring-0 focus:er-ring-offset-0 checked:er-group-hover:er-text-digital-blue-dark checked:focus:er-text-digital-blue-dark checked:er-group-hover:er-bg-digital-blue-dark checked:focus:er-bg-digital-blue-dark disabled:er-border-black-40 disabled:er-pointer-events-none disabled:checked:er-bg-black-40 er-transition-colors er-w-20 er-h-20'
               />
               <span>{item.name}</span>
-              <span>({itemCount})</span>
+              {/* <span>({itemCount})</span> */}
             </label>
           )})}
       </FlexBox>
