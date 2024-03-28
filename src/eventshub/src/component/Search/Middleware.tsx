@@ -44,6 +44,9 @@ export default function Middleware() {
   /**
    * Whenever a filter is changed, update the UI state.
    * Whenever the active tab changes, update the UI state.
+   *
+   * NOTE: This side effect logic is also reproduced in the autocomplete component in order
+   * to determine which items are available to the autocomplete search.
    */
   useEffect(() => {
     const refineFilters:string[] = [];

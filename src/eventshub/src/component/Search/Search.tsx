@@ -7,7 +7,7 @@ import { cnb } from 'cnbuilder';
 import VenueSearchItem from '../SearchItem/VenueSearchItem';
 import VendorSearchItem from '../SearchItem/VendorSearchItem';
 import PolicySearchItem from '../SearchItem/PolicySearchItem';
-import { InstantSearch, Configure, Pagination, CurrentRefinements } from 'react-instantsearch';
+import { InstantSearch, Configure, Pagination } from 'react-instantsearch';
 import { Autocomplete } from '../Autocomplete';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
@@ -218,7 +218,6 @@ export const Search = () => {
               })}
             </FlexBox>
             <FlexBox direction='col' className='er-col-span-9'>
-              <CurrentRefinements />
               <LoadingIndicator />
               <CustomHits
                 hitComponent={SearchItemComponent}
