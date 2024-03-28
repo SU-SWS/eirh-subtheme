@@ -49,7 +49,6 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     setTab : (state, action: PayloadAction<AppTabs>) => {
-      console.log('setTab', action.payload);
       state.tab = action.payload;
       state.index = algoliaIndexMap[action.payload];
       state.field = facetFieldNamesMap[action.payload];

@@ -1,19 +1,16 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useInstantSearch } from "react-instantsearch-core";
 import { useAppState, useFilters } from "../../hooks";
-import type { UiState, InstantSearch } from 'instantsearch.js';
+import type { UiState } from 'instantsearch.js';
 
 export type UIStateProps = {
   uiState: UiState
 }
 
-function middleware({ instantSearchInstance }: { instantSearchInstance: InstantSearch }) {
-  console.log('middleware:', instantSearchInstance);
+function middleware() {
   return {
-    onStateChange({ uiState }: UIStateProps) {
+    onStateChange() {
       // Do something with `uiState` every time the state changes.
-      console.log('uiState:', uiState)
-      // console.log('instantSearchInstance:', instantSearchInstance);
     },
     subscribe() {
       // Do something when the InstantSearch instance starts.
