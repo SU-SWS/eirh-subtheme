@@ -23,7 +23,7 @@ function middleware() {
 
 export default function Middleware() {
   const {
-    // indexUiState,
+    indexUiState,
     setIndexUiState,
     // uiState,
     // setUiState,
@@ -56,7 +56,7 @@ export default function Middleware() {
     if (uniqueFilters.includes('Any/All')) {
       uniqueFilters.push('-Anything-And-Everything');
     }
-    setIndexUiState({refinementList: {[field]: uniqueFilters}});
+    setIndexUiState({ ...indexUiState, refinementList: { [field]: uniqueFilters }});
 
   }, [selectedFilters, filters, setIndexUiState, activeTab, field]);
 
