@@ -22,12 +22,12 @@ function App() {
   // If filters are not loaded, show a loading skeleton.
   if (isLoadingFilter || isLoading) {
     return (
-      <Grid gap='default' md={12} className='er-cc'>
+      <Grid gap='default' md={12}>
         <FlexBox direction='col' className='er-col-span-3'>
-          <Skeleton count={10} className='er-h-40' containerClassName='er-flex-1' />
+          <Skeleton count={10} height={40} containerClassName='er-flex-1' />
         </FlexBox>
         <FlexBox direction='col' className='er-col-span-9'>
-          <Skeleton count={10} className='er-h-100' containerClassName='er-flex-1'/>
+          <Skeleton count={10}  height={100} containerClassName='er-flex-1'/>
         </FlexBox>
       </Grid>
     );

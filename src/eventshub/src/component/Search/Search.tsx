@@ -22,6 +22,7 @@ import CustomRefinementList from '../SearchFilter/CustomRefinementList';
 // import { history } from 'instantsearch.js/es/lib/routers';
 import Middleware from './Middleware';
 
+
 /**
  * Search component.
  */
@@ -213,7 +214,6 @@ export const Search = () => {
                 placeholder={`Search by ${activeTab}`}
                 detachedMediaQuery='none'
                 openOnFocus
-                debug={true}
               />
               <FilterChips />
               {// loop through grouped filters and render the custom refinement list.
