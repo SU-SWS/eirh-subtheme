@@ -7,7 +7,7 @@ interface CustomHitsProps extends UseHitsProps {
   noResultsMessage?: string; // Optional prop for custom no results message
 }
 
-const CustomHits: React.FC<CustomHitsProps> = ({
+export const CustomHits: React.FC<CustomHitsProps> = ({
   hitComponent: HitComponent,
   noResultsMessage = 'No results found.', // Default message if not provided
   ...props
@@ -28,5 +28,3 @@ const CustomHits: React.FC<CustomHitsProps> = ({
     </ul>
   );
 };
-
-export default CustomHits;

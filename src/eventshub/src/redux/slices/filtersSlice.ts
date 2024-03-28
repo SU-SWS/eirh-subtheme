@@ -7,6 +7,7 @@ interface FiltersState {
   isError: boolean;
   rawData: AlgoliaFilterItem[];
   filters: FormattedFilterItem;
+  sortBy: 'relevance' | 'asc' | 'desc';
   groupedFilters: { [key: string]: { name: string, weight: number }[] };
   selectedFilters: string[];
 }
@@ -17,6 +18,7 @@ const initialState: FiltersState = {
   isError: false,
   rawData: [],
   filters: {},
+  sortBy: 'relevance',
   selectedFilters: [],
   groupedFilters: {},
 };
@@ -88,10 +90,13 @@ const filtersSlice = createSlice({
           venues: item['venues:_space_type'],
           policies: item['policies:_logistics_categories_column'] };
       });
-    }
+    },
+    setSortBy: (state, action: PayloadAction<'relevance' | 'asc' | 'desc'>) => {
+      state.sortBy = action.payload;
+    },
   },
 });
 
-export const { addFilter, removeFilter, clearFilters, setFilters, setIsError, setIsLoading, setIsReady, setData } = filtersSlice.actions;
+export const { addFilter, removeFilter, clearFilters, setFilters, setIsError, setIsLoading, setIsReady, setData, setSortBy } = filtersSlice.actions;
 export const selectFilters = (state: { filters: FiltersState }) => state.filters.selectedFilters;
 export default filtersSlice.reducer;

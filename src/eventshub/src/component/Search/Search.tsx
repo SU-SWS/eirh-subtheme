@@ -11,7 +11,7 @@ import { InstantSearch, Configure, Pagination, CurrentRefinements } from 'react-
 import { Autocomplete } from '../Autocomplete';
 import { Grid } from '../Grid';
 import { FlexBox } from '../FlexBox';
-import CustomHits from '../CustomHits/CustomHits';
+import { CustomHits } from '../CustomHits';
 import { FilterChips } from '../FilterChips/FilterChips';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import { useAppState, useFilters } from '../../hooks';
@@ -21,6 +21,7 @@ import { useEffect, useRef } from 'react';
 import CustomRefinementList from '../SearchFilter/CustomRefinementList';
 // import { history } from 'instantsearch.js/es/lib/routers';
 import Middleware from './Middleware';
+import { SortBy } from '../SortBy';
 
 /**
  * Search component.
@@ -57,8 +58,6 @@ export const Search = () => {
     }
     swapIndex();
   }, [activeIndex, dispatch, searchClient]);
-
-
 
   // Do stuff on tab click.
   const handleTabClick = (tab: string) => {
@@ -231,6 +230,7 @@ export const Search = () => {
             <FlexBox direction='col' className='er-col-span-9'>
               <CurrentRefinements />
               <LoadingIndicator />
+              <SortBy />
               <CustomHits
                 hitComponent={SearchItemComponent}
                 noResultsMessage={`We're sorry, but no results were found matching your search criteria. Please try again with different keywords or filters.`}

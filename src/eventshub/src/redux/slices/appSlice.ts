@@ -7,7 +7,8 @@ import { AppTabs } from '../../utilities/types';
  */
 export interface AppState {
   tab: AppTabs;
-  index: typeof algoliaIndexMap[keyof typeof algoliaIndexMap];
+  // index: typeof algoliaIndexMap[keyof typeof algoliaIndexMap];
+  index: string;
   isLoading: boolean;
   isReady: boolean;
   isError: boolean;
