@@ -1,18 +1,16 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useInstantSearch } from "react-instantsearch-core";
 import { useAppState, useFilters } from "../../hooks";
-import type { UiState, InstantSearch } from 'instantsearch.js';
+import type { UiState } from 'instantsearch.js';
 
 export type UIStateProps = {
   uiState: UiState
 }
 
-function middleware({ instantSearchInstance }: { instantSearchInstance: InstantSearch }) {
+function middleware() {
   return {
-    onStateChange({ uiState }: UIStateProps) {
+    onStateChange() {
       // Do something with `uiState` every time the state changes.
-      console.log('uiState:', uiState)
-      console.log('instantSearchInstance:', instantSearchInstance);
     },
     subscribe() {
       // Do something when the InstantSearch instance starts.
@@ -25,7 +23,7 @@ function middleware({ instantSearchInstance }: { instantSearchInstance: InstantS
 
 export default function Middleware() {
   const {
-    // indexUiState,
+    indexUiState,
     setIndexUiState,
     // uiState,
     // setUiState,
@@ -34,23 +32,14 @@ export default function Middleware() {
     // results,
     // scopedResults,
     // refresh,
-    status,
-    error,
+    // status,
+    // error,
     addMiddlewares,
   } = useInstantSearch();
 
   const { activeIndex, activeTab } = useAppState();
   const { filters, selectedFilters, getIndexFilterName } = useFilters();
   const field = getIndexFilterName(activeTab);
-
-// console.log('indexUiState', indexUiState);
-// console.log('uiState', uiState);
-// console.log('indexRenderState', indexRenderState);
-// console.log('renderState', renderState);
-// console.log('results', results);
-// console.log('scopedResults', scopedResults);
-console.log('status', status);
-console.log('error', error);
 
   /**
    * Whenever a filter is changed, update the UI state.
@@ -67,7 +56,7 @@ console.log('error', error);
     if (uniqueFilters.includes('Any/All')) {
       uniqueFilters.push('-Anything-And-Everything');
     }
-    setIndexUiState({refinementList: {[field]: uniqueFilters}});
+    setIndexUiState({ ...indexUiState, refinementList: { [field]: uniqueFilters }});
 
   }, [selectedFilters, activeIndex, filters, setIndexUiState]);
 
