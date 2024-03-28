@@ -22,7 +22,7 @@ export const facetFieldNamesMap = {
  */
 
 export default function useFilters() {
-  const { isReady, isLoading, isError, filters, selectedFilters, groupedFilters } = useAppSelector((state) => state.filters);
+  const { isReady, isLoading, isError, filters, selectedFilters, groupedFilters, sortBy } = useAppSelector((state) => state.filters);
   const dispatch = useAppDispatch();
   const indexName = 'SERENE ALL - appEb3LGlZS9OfNrK - Relationships'; // Default.
 
@@ -64,6 +64,7 @@ export default function useFilters() {
     selectedFilters,
     groupedFilters,
     filters,
+    sortBy,
     isReady,
     isLoading,
     isError
