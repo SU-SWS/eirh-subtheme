@@ -19,6 +19,10 @@ export interface AppState {
  * Vars and constants
  * ******************************************************************************************************
  */
+
+
+export const tabs = ['venues', 'vendors', 'policies'] as const;
+
 export const algoliaIndexMap = {
   venues: 'SERENE ALL - appEb3LGlZS9OfNrK - Venues',
   vendors: 'SERENE ALL - appEb3LGlZS9OfNrK - Vendors',
