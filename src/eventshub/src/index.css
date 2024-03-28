@@ -145,10 +145,6 @@
   background-color: currentColor;
 }
 
-/* TW */
-/* @tailwind base; */
-@tailwind components;
-@tailwind utilities;
 
 
 #su-eventshub .aa-Form {
@@ -156,11 +152,15 @@
 }
 
 #su-eventshub .aa-InputWrapper input {
-  @apply er-w-full er-p-10 er-rounded-full er-text-21 er-border;
+  @apply er-w-full er-m-0 er-py-24 er-px-26 er-rounded-full er-text-21 er-border;
+}
+
+#su-eventshub .aa-InputWrapperSuffix { 
+  @apply er-absolute er-top-0 er-right-50 er-h-full er-items-center;
 }
 
 #su-eventshub .aa-InputWrapperPrefix .aa-Label {
-  @apply er-p-0 er-m-0 er-absolute er-right-5 er-top-5;
+  @apply er-p-0 er-m-0 er-absolute er-right-10 er-top-0 er-flex er-items-center;
 }
 
 #su-eventshub .aa-InputWrapperPrefix .aa-Label button {
@@ -178,3 +178,8 @@
 #su-eventshub .ais-Pagination-item--selected .ais-Pagination-link {
   @apply er-text-black er-border-b-3 er-border-black;
 }
+
+/* TW */
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
