@@ -59,7 +59,7 @@ export default function Middleware() {
     if (uniqueFilters.includes('Any/All')) {
       uniqueFilters.push('-Anything-And-Everything');
     }
-    setIndexUiState({ ...indexUiState, refinementList: { [field]: uniqueFilters }});
+    setIndexUiState({ ...indexUiState, refinementList: { [field]: uniqueFilters }, page: 0 });
 
   }, [selectedFilters, filters, setIndexUiState, activeTab, field]);
 

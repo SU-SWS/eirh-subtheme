@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRefinementList } from 'react-instantsearch';
+import { usePagination, useRefinementList } from 'react-instantsearch';
 import { useFilters } from '../../hooks';
 import { useAppDispatch } from '../../redux/store';
 import { Heading } from '../Typography';
@@ -18,11 +18,13 @@ const CustomRefinementList = ({ attribute, title, options }:CustomRefinementList
 
   const dispatch = useAppDispatch();
   useRefinementList({attribute, operator: 'or', limit: 100 });
+  const { refine: setPage } = usePagination();
   const buttonId = nanoid();
   const contentId = nanoid();
   const { selectedFilters } = useFilters();
 
   const handleRefine = (key:string) => {
+    setPage(0);
     dispatch({type: 'filters/toggleFilter', payload: key});
   }
 
